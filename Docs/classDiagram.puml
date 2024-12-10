@@ -13,6 +13,7 @@ class UserProfile {
     -Timetable timetable
     +setPreferences(Map<String, String> preferences)
     +getPreferences(): Map<String, String>
+    +adminMode(String password)
 }
 
 class Timetable {
