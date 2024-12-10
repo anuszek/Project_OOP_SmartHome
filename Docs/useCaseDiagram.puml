@@ -7,7 +7,7 @@ skinparam usecaseFontSize 14
 left to right direction
 
 actor "User" as User #lightblue
-actor "Advanced User" as AdvancedUser #orange
+actor "Advanced User" as Adm #orange
 
 rectangle SmartHomeSystem {
     usecase "Control Devices" as UC1
@@ -23,10 +23,7 @@ User --> UC2 #green
 User --> UC3 #green
 User --> UC4 #green
 
-AdvancedUser --> UC1 #red
-AdvancedUser --> UC2 #red
-AdvancedUser --> UC3 #red
-AdvancedUser --> UC4 #red
-AdvancedUser --> UC5 #red
-AdvancedUser --> UC6 #red
+Adm --> UC5 #red
+Adm --> UC6 #red
+User --> Adm #blue :Advanced Mode\n(Privilege Escalation)
 @enduml
