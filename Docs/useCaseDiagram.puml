@@ -13,7 +13,7 @@ rectangle SmartHomeSystem {
     usecase "Control Devices" as UC1
     usecase "Set Timetables" as UC2
     usecase "View Device Status" as UC3
-    usecase "Order Groceries via Fridge" as UC4
+    usecase "View Device List" as UC4
     usecase "Add/Remove Devices" as UC5
     usecase "Configure Advanced Settings" as UC6
 }
