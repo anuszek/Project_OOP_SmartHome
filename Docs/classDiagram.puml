@@ -1,0 +1,104 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class SmartHomeSystem {
+    +addDevice(SmartDevice device)
+    +removeDevice(String deviceId)
+    +addUser(UserProfile user)
+    +removeUser(String userId)
+}
+
+class UserProfile {
+    -String name
+    -Timetable timetable
+    +setPreferences(Map<String, String> preferences)
+    +getPreferences(): Map<String, String>
+    +adminMode(String password)
+}
+
+class Timetable {
+    -Map<String, String> schedule
+    +addTask(String time, String task)
+    +getTasks(): Map<String, String>
+}
+
+abstract class SmartDevice {
+    -String deviceId
+    -String name
+    -boolean status
+    +control(String command)
+}
+
+class DeviceDatabase {
+    -List<SmartDevice> devices
+    +addDevice(SmartDevice device)
+    +removeDevice(String deviceId)
+    +findDevice(String deviceId): SmartDevice
+}
+
+class Light {
+    -int brightness
+    -String color
+    +control(String command)
+}
+
+class SoundSystem {
+    -int volume
+    -List<String> playlist
+    +control(String command)
+}
+
+class Blinds {
+    -String position
+    +control(String command)
+}
+
+abstract class KitchenAppliance {
+    +control(String command)
+}
+
+class Fridge {
+    -List<String> inventory
+    +checkInventory(): List<String>
+    +orderFood(String item)
+}
+
+class Oven {
+    -int temperature
+    +preheat(int temp)
+    +startCooking(String recipe)
+}
+
+class HeatingSystem {
+    -int temperature
+    +setTemperature(int temp)
+}
+
+class Rumba {
+    +startCleaning()
+    +stopCleaning()
+}
+
+class Locks {
+    -boolean locked
+    +lock()
+    +unlock()
+}
+
+SmartHomeSystem --> DeviceDatabase
+SmartHomeSystem --> UserProfile
+UserProfile --> Timetable
+
+SmartDevice <|-- Light
+SmartDevice <|-- SoundSystem
+SmartDevice <|-- Blinds
+SmartDevice <|-- HeatingSystem
+SmartDevice <|-- Rumba
+SmartDevice <|-- Locks
+SmartDevice <|-- KitchenAppliance
+
+KitchenAppliance <|-- Fridge
+KitchenAppliance <|-- Oven
+
+DeviceDatabase --> SmartDevice
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+skinparam sequenceMessageAlignment center
+skinparam sequenceArrowColor #blue
+skinparam participantBackgroundColor #EEE
+skinparam participantBorderColor #000
+
+actor User
+participant "SmartHomeSystem" as SHS
+participant "DeviceDatabase" as DB
+participant "Light Device" as Light
+
+User -> SHS: Control Device ("Turn on Light")
+SHS -> DB: Find Device ("Light")
+DB --> SHS: Return Device Info
+SHS -> Light: Send Command ("Turn On")
+Light --> SHS: Confirm Status ("Light On")
+SHS --> User: Success Response ("Light is On")
+@enduml

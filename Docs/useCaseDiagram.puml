@@ -1,0 +1,29 @@
+@startuml
+skinparam actorStyle stickman
+skinparam usecaseBackgroundColor #EEE
+skinparam usecaseBorderColor #000
+skinparam usecaseFontSize 14
+
+left to right direction
+
+actor "User" as User #lightblue
+actor "Advanced User" as Adm #orange
+
+rectangle SmartHomeSystem {
+    usecase "Control Devices" as UC1
+    usecase "Set Timetables" as UC2
+    usecase "View Device Status" as UC3
+    usecase "View Device List" as UC4
+    usecase "Add/Remove Devices" as UC5
+    usecase "Configure Advanced Settings" as UC6
+}
+
+User --> UC1 #green
+User --> UC2 #green
+User --> UC3 #green
+User --> UC4 #green
+
+Adm --> UC5 #red
+Adm --> UC6 #red
+User --> Adm #blue :Advanced Mode\n(Privilege Escalation)
+@enduml
