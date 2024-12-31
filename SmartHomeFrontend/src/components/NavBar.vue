@@ -9,14 +9,16 @@
       <li @click="navigateTo('/users')"><button :class="{ active: isActive('/users') }" class="navigation">Users</button></li>
       <li @click="navigateTo('/settings')"><button :class="{ active: isActive('/settings') }" class="navigation">Settings</button></li>
       <li class="separator"></li>
-      <li><button id="sign_button">Sign in</button></li>
-      <li><button id="register_button">Register</button></li>
+      <li @click="$emit('toggle-login')"><button id="sign_button">Sign in</button></li>
     </ul>
   </nav>
 </template>
 
 <script>
   export default {
+    props: {
+      showLogin: Boolean
+    },
     computed: {
       isActive() {
         return (path) => this.$route.path === path;
@@ -43,7 +45,7 @@
             button.style.width = `${maxWidth}px`;
           }
         });
-      }
+      },
     },
     mounted() {
       this.setButtonWidths();

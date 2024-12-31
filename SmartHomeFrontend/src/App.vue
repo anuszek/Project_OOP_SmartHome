@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="sticky-header">
-      <NavBar />
+      <NavBar :showLogin="showLogin" @toggle-login="toggleLogin" />
     </header>
     <main>
       <router-view />
@@ -9,6 +9,7 @@
     <footer>
       <Footer />
     </footer>
+    <Login v-if="showLogin" @close-login="toggleLogin" />
   </div>
   <!-- <APICall /> -->
 </template>
@@ -20,11 +21,23 @@ import APICall from './components/APICall.vue';
 <script>
 import NavBar from './components/NavBar.vue';
 import Footer from './components/Footer.vue';
+import Login from './views/Login.vue';
 
 export default {
   components: {
     NavBar,
     Footer,
+    Login,
+  },
+  data() {
+    return {
+      showLogin: false,
+    };
+  },
+  methods: {
+    toggleLogin() {
+      this.showLogin = !this.showLogin;
+    },
   },
 };
 </script>
