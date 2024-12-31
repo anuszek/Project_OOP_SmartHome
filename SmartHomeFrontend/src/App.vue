@@ -1,12 +1,16 @@
 <template>
-  <APICall />
   <div id="app">
-    <NavBar />
+    <header>
+      <NavBar />
+    </header>
     <main>
       <router-view />
     </main>
-    <Footer />
+    <div id="footer">
+      <Footer />
+    </div>
   </div>
+  <!-- <APICall /> -->
 </template>
 
 <script setup>

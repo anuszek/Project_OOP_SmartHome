@@ -12,3 +12,31 @@
 <script>
   export default { }
 </script>
+
+<style scoped>
+  nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+    margin-right: 10px;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

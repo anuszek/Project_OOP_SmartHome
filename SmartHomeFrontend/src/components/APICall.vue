@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>API Call</h1>
-    <p>Status: {{ status.status }}</p>
+    <p>API Call Status: {{ status.status }}</p>
   </div>
 </template>
 
