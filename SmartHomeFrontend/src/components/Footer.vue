@@ -1,7 +1,7 @@
 <template>
-  <footer>
     <p>&copy; Smart Home 2024</p>
-  </footer>
+    <p>Maciej Rybak</p>
+    <p>Maurycy Januszek</p>
 </template>
 
 <script>

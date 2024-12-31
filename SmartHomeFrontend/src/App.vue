@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <header>
+    <header class="sticky-header">
       <NavBar />
     </header>
     <main>
       <router-view />
     </main>
-    <div id="footer">
+    <footer>
       <Footer />
-    </div>
+    </footer>
   </div>
   <!-- <APICall /> -->
 </template>
@@ -30,5 +30,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
 </style>

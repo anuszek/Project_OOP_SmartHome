@@ -6,7 +6,7 @@ import Settings from '../views/Settings.vue'
 
 
 const routes = [
-  { path: '/', component: Dashboard },
+  { path: '/', component: null },
   {path: '/dashboard', component: Dashboard},
   {path: '/devices', component: Devices},
   {path: '/users', component: Users},
