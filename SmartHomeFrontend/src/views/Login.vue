@@ -4,7 +4,7 @@
       <button class="close-btn" @click="$emit('close-login')">
         <span class="material-symbols-outlined">close</span>
       </button>
-      <h2>Sign In</h2>
+      <h2>Log In</h2>
       <form @submit.prevent="handleLogin">
         <div>
             <input type="text" placeholder="Username" id="username" v-model="username" required>
@@ -19,18 +19,32 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       showLogin: true,
       username: '',
-      password: ''
+      password: '',
+      data: {},
     };
   },
   methods: {
-    handleLogin() {
-      // Handle login logic here
-      console.log('Logging in with', this.username, this.password);
+    async handleLogin() {
+      await axios.post('http://localhost:8080/api/login', {
+        username: this.username,
+        password: this.password
+      });
+      
+      await axios.get('http://localhost:8080/api/data')
+        .then((response) => {
+          this.data = response.data;
+        })
+        .catch((error) => {
+          console.log("Error fetching data: ", error);
+        });
+
       this.$emit('close-login');
     }
   }
