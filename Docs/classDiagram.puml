@@ -53,14 +53,11 @@ class Blinds {
     +control(String command)
 }
 
-abstract class KitchenAppliance {
-    +control(String command)
-}
 
 class Fridge {
     -List<String> inventory
     +checkInventory(): List<String>
-    +orderFood(String item)
+    +createShoppingList(List<String> produce): List<String>
 }
 
 class Oven {
@@ -95,10 +92,10 @@ SmartDevice <|-- Blinds
 SmartDevice <|-- HeatingSystem
 SmartDevice <|-- Rumba
 SmartDevice <|-- Locks
-SmartDevice <|-- KitchenAppliance
 
-KitchenAppliance <|-- Fridge
-KitchenAppliance <|-- Oven
+
+SmartDevice <|-- Fridge
+SmartDevice <|-- Oven
 
 DeviceDatabase --> SmartDevice
 @enduml
