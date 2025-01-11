@@ -13,16 +13,16 @@ export default {
       status: {},
     }
   },
-  // mounted() {
-  //   axios
-  //     .get('http://localhost:8080/api/status')
-  //     .then((response) => {
-  //       this.status = response.data
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error fetching data: ", error)
-  //     })
-  // },
+  mounted() {
+    axios
+      .get('http://localhost:8080/api/status')
+      .then((response) => {
+        this.status = response.data
+      })
+      .catch((error) => {
+        console.log("Error fetching data: ", error)
+      })
+  },
 };
 
 </script>
