@@ -2,7 +2,6 @@ package SmartSystem;
 
 public class SoundSystem extends SmartDevice{
     private int volume;
-    private String connectionType; // Bluetooth, Wi-Fi or smth idk
     public SoundSystem(String deviceName, String deviceId, String description) {
         super(deviceName, deviceId, description);
     }
@@ -11,11 +10,5 @@ public class SoundSystem extends SmartDevice{
     }
     public void setVolume(int volume) {
         this.volume = volume;
-    }
-    public String getConnectionType() {
-        return connectionType;
-    }
-    public void setConnectionType(String connectionType) {
-        this.connectionType = connectionType;
     }
 }

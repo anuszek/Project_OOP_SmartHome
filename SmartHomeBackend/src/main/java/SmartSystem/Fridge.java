@@ -6,8 +6,8 @@ import java.util.List;
 public class Fridge extends SmartDevice {
     private List<String> inventory;
     private boolean Skyrim = false;
-    private float fridgeTemp;
-    private float freezerTemp;
+    private int fridgeTemp;
+    private int freezerTemp;
     public Fridge(String name, String deviceId, String description) {
         super(name, deviceId, description);
     }
@@ -40,16 +40,16 @@ public class Fridge extends SmartDevice {
         }
         return list;
     }
-    public float getFridgeTemp() {
+    public int getFridgeTemp() {
         return fridgeTemp;
     }
-    public void setFridgeTemp(float fridgeTemp) {
+    public void setFridgeTemp(int fridgeTemp) {
         this.fridgeTemp = fridgeTemp;
     }
-    public float getFreezerTemp() {
+    public int getFreezerTemp() {
         return freezerTemp;
     }
-    public void setFreezerTemp(float freezerTemp) {
+    public void setFreezerTemp(int freezerTemp) {
         this.freezerTemp = freezerTemp;
     }
 }
