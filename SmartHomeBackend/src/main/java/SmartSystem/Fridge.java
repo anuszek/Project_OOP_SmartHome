@@ -8,8 +8,12 @@ public class Fridge extends SmartDevice {
     private boolean Skyrim = false;
     private int fridgeTemp;
     private int freezerTemp;
-    public Fridge(String name, String deviceId, String description) {
+    public Fridge(String name, String deviceId, String description, int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
         super(name, deviceId, description);
+        this.fridgeTemp = fridgeTemp;
+        this.freezerTemp = freezerTemp;
+        this.inventory = inventory;
+        this.Skyrim = Skyrim;
     }
     public List<String> getInventory() {
         return inventory;

@@ -2,8 +2,9 @@ package SmartSystem;
 
 public class Locks extends SmartDevice {
     private boolean locked;
-    public Locks(String name, String deviceId, String description) {
+    public Locks(String name, String deviceId, String description, boolean locked) {
         super(name, deviceId, description);
+        this.locked = locked;
     }
     public boolean isLocked() {
         return locked;
