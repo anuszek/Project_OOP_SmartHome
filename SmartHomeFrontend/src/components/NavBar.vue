@@ -9,7 +9,7 @@
       <li @click="navigateTo('/users')"><button :class="{ active: isActive('/users') }" class="navigation">Users</button></li>
       <li @click="navigateTo('/settings')"><button :class="{ active: isActive('/settings') }" class="navigation">Settings</button></li>
       <li class="separator"></li>
-      <li @click="$emit('toggle-login')"><button id="sign_button">Sign in</button></li>
+      <li @click="$emit('toggle-login')"><button id="sign_button">Log in</button></li>
     </ul>
   </nav>
 </template>
