@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class Rumba extends SmartDevice{
     public Rumba(String name, String deviceId, String description) {

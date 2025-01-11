@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class SmartDevice {
     private String name;

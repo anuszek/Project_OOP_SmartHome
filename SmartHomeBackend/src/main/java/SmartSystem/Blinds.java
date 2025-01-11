@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class Blinds extends SmartDevice {
     private int position;

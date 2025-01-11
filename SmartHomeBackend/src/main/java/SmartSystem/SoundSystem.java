@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class SoundSystem extends SmartDevice{
     private int volume;

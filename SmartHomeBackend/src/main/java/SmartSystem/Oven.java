@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class Oven extends SmartDevice {
     private int temperature;

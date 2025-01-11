@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class Lights extends SmartDevice {
     private int light_level;

@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 import java.util.ArrayList;
 import java.util.List;

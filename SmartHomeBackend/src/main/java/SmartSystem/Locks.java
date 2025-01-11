@@ -1,4 +1,4 @@
-package SmartDevice;
+package SmartSystem;
 
 public class Locks extends SmartDevice {
     private boolean locked;
