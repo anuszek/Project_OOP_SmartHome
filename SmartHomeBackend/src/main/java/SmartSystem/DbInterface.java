@@ -15,7 +15,7 @@ public class DbInterface {
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM Rumba where deviceName = '" + deviceName + "'");
             if (rs.next()) {
-                return rs.getString("deviceName");
+                return rs.getString("name");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

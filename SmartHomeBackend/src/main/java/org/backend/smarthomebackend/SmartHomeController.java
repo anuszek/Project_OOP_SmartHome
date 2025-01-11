@@ -43,7 +43,7 @@ public class SmartHomeController {
     @GetMapping("/devices")
     public Map<String, Object> getDevices(){
         DbInterface.getDeviceName("test");
-        return Map.of("devices", "device");
+        int test = 1;
+        return Map.of("devices", test);
     }
-
 }

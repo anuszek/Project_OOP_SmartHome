@@ -26,6 +26,7 @@ export default {
 <style scoped>
 .device-component {
   border: 1px solid #ccc;
+  border-radius: 5px;
   padding: 16px;
   margin: 16px;
   text-align: center;

@@ -5,10 +5,9 @@
   </div>
   <div class="device-list">
     <DeviceComponent
-      v-for="device in testDevices"
+      v-for="device in devices"
       :key="device.id"
       :device="device"
-      @toggle-device="toggleDevice"
     />
   </div>
 </template>
@@ -39,6 +38,8 @@
         .catch((error) => {
           console.log("Error fetching data: ", error);
         });
+
+      console.log(this.devices);
     }
   };
 
