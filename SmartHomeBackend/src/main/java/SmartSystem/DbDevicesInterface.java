@@ -38,4 +38,44 @@ public class DbDevicesInterface {
 
         return devicesJsonList;
     }
-}
+    public static void deleteDevice(String deviceData) {
+        String sql = "DELETE FROM Devices WHERE deviceData = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, deviceData);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            logger.severe("Error deleting device: " + ex.getMessage());
+        }
+    }
+    public static void updateDevice(String deviceData, String newDeviceData) {
+        String sql = "UPDATE Devices SET deviceData = ? WHERE deviceData = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, newDeviceData);
+            pstmt.setString(2, deviceData);
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            logger.severe("Error updating device: " + ex.getMessage());
+        }
+    }
+    public static ArrayList<String> getFilteredDevicesList(String deviceType) {
+        ArrayList<String> devicesJsonList = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM Devices WHERE deviceType = '" + deviceType + "'")) {
+
+            while (rs.next()) {
+                String deviceData = rs.getString("deviceData");
+                devicesJsonList.add(deviceData);
+            }
+        } catch (SQLException ex) {
+            logger.severe("Error retrieving devices: " + ex.getMessage());
+        }
+        return devicesJsonList;
+    }
+
+    }
