@@ -1,8 +1,12 @@
 package org.backend.smarthomebackend;
 
+import SmartSystem.DbDevicesInterface;
+import SmartSystem.SmartDevice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import SmartSystem.DbInterface;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.sql.Connection;
@@ -42,8 +46,7 @@ public class SmartHomeController {
 
     @GetMapping("/devices")
     public Map<String, Object> getDevices(){
-        DbInterface.getDeviceName("test");
-        int test = 1;
+        ArrayList<SmartDevice> test= DbDevicesInterface.getAllDevicesList();
         return Map.of("devices", test);
     }
 }

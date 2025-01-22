@@ -6,7 +6,7 @@ import java.util.List;
 
 public class DbDevicesInterface {
     public static ArrayList<SmartDevice> getAllDevicesList() {
-        final String dbUrl = "jdbc:sqlite:src/main/resources/DB/Devices";
+        final String dbUrl = "jdbc:sqlite:SmartHomeBackend/src/main/resources/DB/Devices";
         ArrayList<SmartDevice> devicesList = new ArrayList<>();
         final ArrayList<String> devicesTypesList = new ArrayList<>(List.of("blinds", "fridge", "light", "oven", "heating_system", "locks", "rumba", "sound_system"));
         try (Connection conn = DriverManager.getConnection(dbUrl);
