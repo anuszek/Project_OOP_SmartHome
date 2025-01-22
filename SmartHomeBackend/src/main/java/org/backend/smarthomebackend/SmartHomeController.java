@@ -1,9 +1,11 @@
 package org.backend.smarthomebackend;
 
+
 import SmartSystem.DbDevicesInterface;
 import SmartSystem.SmartDevice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -19,8 +21,12 @@ public class SmartHomeController {
 
     @GetMapping("/devices")
     public Map<String, Object> getDevices(){
+
         ArrayList<String> test = new ArrayList<>();
         test = DbDevicesInterface.getAllDevicesList();
         return Map.of("devices", test);
+
+
     }
 }
+
