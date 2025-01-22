@@ -1,9 +1,14 @@
 package SmartSystem;
 
 public class Locks extends SmartDevice {
+    private String deviceType;
     private boolean locked;
-    public Locks(String name, String deviceId, String description) {
+
+    public Locks(){}
+
+    public Locks(String name, String deviceId, String description, boolean locked) {
         super(name, deviceId, description);
+        this.locked = locked;
     }
     public boolean isLocked() {
         return locked;
@@ -13,5 +18,13 @@ public class Locks extends SmartDevice {
     }
     public void unlock() {
         locked = false;
+    }
+    @Override
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+    @Override
+    public String getDeviceType() {
+        return deviceType;
     }
 }

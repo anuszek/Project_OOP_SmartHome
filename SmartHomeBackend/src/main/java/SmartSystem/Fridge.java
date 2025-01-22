@@ -1,15 +1,29 @@
 package SmartSystem;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Fridge extends SmartDevice {
+    private String deviceType;
+    @JsonProperty
     private List<String> inventory;
+    @JsonProperty
     private boolean Skyrim = false;
+    @JsonProperty
     private int fridgeTemp;
+    @JsonProperty
     private int freezerTemp;
-    public Fridge(String name, String deviceId, String description) {
+
+    public Fridge(){}
+
+    public Fridge(String name, String deviceId, String description, int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
         super(name, deviceId, description);
+        this.fridgeTemp = fridgeTemp;
+        this.freezerTemp = freezerTemp;
+        this.inventory = inventory;
+        this.Skyrim = Skyrim;
     }
     public List<String> getInventory() {
         return inventory;
@@ -51,5 +65,13 @@ public class Fridge extends SmartDevice {
     }
     public void setFreezerTemp(int freezerTemp) {
         this.freezerTemp = freezerTemp;
+    }
+    @Override
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+    @Override
+    public String getDeviceType() {
+        return deviceType;
     }
 }
