@@ -4,19 +4,13 @@ import SmartSystem.DbDevicesInterface;
 import SmartSystem.SmartDevice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import SmartSystem.DbInterface;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class SmartHomeController {
     @GetMapping("/status")
     public Map<String, String> getStatus() {
@@ -46,7 +40,8 @@ public class SmartHomeController {
 
     @GetMapping("/devices")
     public Map<String, Object> getDevices(){
-        ArrayList<SmartDevice> test= DbDevicesInterface.getAllDevicesList();
+        ArrayList<String> test = new ArrayList<>();
+        test = DbDevicesInterface.getAllDevicesList();
         return Map.of("devices", test);
     }
 }

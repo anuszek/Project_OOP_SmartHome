@@ -1,10 +1,20 @@
 package SmartSystem;
 
-public class SmartDevice {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public abstract class SmartDevice {
+    @JsonProperty
     private String name;
+    @JsonProperty
     private final String deviceId;
     private boolean online;
+    @JsonProperty
     private String description;
+
+    public SmartDevice(){
+        this.deviceId = "";
+    }
+
     public SmartDevice(String name, String deviceId, String description) {
         this.name = name;
         this.deviceId = deviceId;
@@ -34,4 +44,6 @@ public class SmartDevice {
     public String getDescription() {
         return description;
     }
+    public abstract void setDeviceType(String deviceType);
+    public abstract String getDeviceType();
 }
