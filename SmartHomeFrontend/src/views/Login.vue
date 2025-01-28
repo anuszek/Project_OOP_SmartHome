@@ -45,7 +45,11 @@ export default {
           console.log("Error fetching data: ", error);
         });
 
-      this.$emit('close-login');
+      if (this.data.authenticated) {
+        this.$emit('close-login');
+      } else {
+        alert('Invalid username or password');
+      }
     }
   }
 };
