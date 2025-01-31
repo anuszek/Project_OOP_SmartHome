@@ -10,6 +10,7 @@
       <li @click="navigateTo('/settings')"><button :class="{ active: isActive('/settings') }" class="navigation">Settings</button></li>
       <li class="separator"></li>
       <li @click="$emit('toggle-login')"><button id="sign_button">Log in</button></li>
+      <li @click="$emit('toggle-register')"><button id="register_button">Register</button></li>
     </ul>
   </nav>
 </template>
@@ -17,7 +18,8 @@
 <script>
   export default {
     props: {
-      showLogin: Boolean
+      showLogin: Boolean,
+      showRegister: Boolean,
     },
     computed: {
       isActive() {
@@ -82,17 +84,15 @@
   #sign_button {
     background-color: #4CAF50;
     color: white;
-    /* border: none; */
     border-radius: 5px;
     margin-left: 1rem;
    }
 
   #register_button {
-    background-color: #4CAF50;
+    background-color: #242424;
     color: white;
-    /* border: none; */
     border-radius: 5px;
-    margin-left: 1rem;
+    margin-left: 1rem;  
   }
 
   .active {

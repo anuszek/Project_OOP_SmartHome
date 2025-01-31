@@ -45,7 +45,9 @@ public class DbUserLogin {
         return null;
     }
     public String register(String username, String password) {
+
         String sql = "INSERT INTO Users(username, password,isAdmin) VALUES(?, ?, ?)";
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);

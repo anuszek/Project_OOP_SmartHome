@@ -25,8 +25,15 @@ public class SmartHomeController {
         ArrayList<String> test = new ArrayList<>();
         test = DbDevicesInterface.getAllDevicesList();
         return Map.of("devices", test);
+    }
 
-
+    @PostMapping("/toggle-device")
+    public ResponseEntity<String> toggleDevice(@RequestBody Map<String, String> body) {
+        // get device id from request body
+        // handle the request
+        // getDevices();
+        System.out.println(body);
+        return ResponseEntity.ok("Device toggled");
     }
 }
 
