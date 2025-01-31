@@ -37,7 +37,7 @@ export default {
         password: this.password
       });
       
-      await axios.get('http://localhost:8080/api/login_data')
+      await axios.get('http://localhost:8080/api/login')
         .then((response) => {
           this.data = response.data;
         })
