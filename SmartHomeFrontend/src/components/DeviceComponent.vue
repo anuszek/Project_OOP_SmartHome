@@ -33,8 +33,8 @@ export default {
   padding: 16px;
   margin: 16px;
   text-align: center;
-  background-color: #ccc;
+  background-color: #ededed;
   color: #000;
-  box-shadow: 2px 2px 7px #52e2b2;
+  box-shadow: 2px 2px 7px #4CAF50;
 }
 </style>

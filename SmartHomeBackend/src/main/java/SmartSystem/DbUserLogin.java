@@ -45,6 +45,7 @@ public class DbUserLogin {
         return null;
     }
     public String register(String username, String password) {
+        // add check for existing user
         String sql = "INSERT INTO Users(username, password) VALUES(?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

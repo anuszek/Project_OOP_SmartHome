@@ -1,18 +1,18 @@
 <template>
-  <div v-if="showLogin" class="overlay" @click.self="$emit('close-login')">
-    <div class="login-popup">
-      <button class="close-btn" @click="$emit('close-login')">
+  <div v-if="showRegister" class="register-overlay" @click.self="$emit('close-register')">
+    <div class="register-popup">
+      <button class="close-btn" @click="$emit('close-register')">
         <span class="material-symbols-outlined">close</span>
       </button>
-      <h2>Log In</h2>
-      <form @submit.prevent="handleLogin">
+      <h2>Register</h2>
+      <form @submit.prevent="handleRegister">
         <div>
             <input type="text" placeholder="Username" id="username" v-model="username" required>
         </div>
         <div>
           <input type="password" placeholder="Password" id="password" v-model="password" required>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   </div>
@@ -24,28 +24,26 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      showLogin: true,
+      showRegister: true,
       username: '',
       password: '',
       data: {},
     };
   },
   methods: {
-    async handleLogin() {
+    async handleRegister() {
       try {
-        const response = await axios.post('http://localhost:8080/api/login', {
+        const response = await axios.post('http://localhost:8080/api/register', {
           username: this.username,
           password: this.password,
         });
-        
+
         if (response.data.authenticated) {
-          this.$emit('close-login');
-        } else {
-          alert('Invalid username or password');
+          this.$emit('close-register');
         }
       } catch (error) {
-        console.log("Error logging in: ", error);
-        alert('Login failed. Please try again later.');
+        console.log("Error creating user: ", error);
+        alert('Creating user failed. Please try again later.');
       }
     }
   }
@@ -53,7 +51,7 @@ export default {
 </script>
 
 <style scoped>
-.overlay {
+.register-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -66,7 +64,7 @@ export default {
   z-index: 1000;
 }
 
-.login-popup {
+.register-popup {
   background: white;
   color: black;
   padding: 20px;
