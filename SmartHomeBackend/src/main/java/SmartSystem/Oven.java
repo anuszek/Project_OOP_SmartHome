@@ -1,12 +1,12 @@
 package SmartSystem;
 
 public class Oven extends SmartDevice {
-    private String deviceType;
+    private String deviceType = "Oven";
     private int temperature;
 
     public Oven(){}
-    public Oven(String name, String deviceId, String description, int temperature) {
-        super(name, deviceId, description);
+    public Oven(String name, String deviceId, String description,boolean online, int temperature) {
+        super(name, deviceId, description,online);
         this.temperature = temperature;
     }
     public int getTemperature() {
@@ -15,10 +15,7 @@ public class Oven extends SmartDevice {
     public void preheat(int temperature) {
         this.temperature = temperature;
     }
-    @Override
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
+
     @Override
     public String getDeviceType() {
         return deviceType;

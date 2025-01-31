@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fridge extends SmartDevice {
-    private String deviceType;
+    private String deviceType = "Fridge";
     @JsonProperty
     private List<String> inventory;
     @JsonProperty
@@ -18,8 +18,8 @@ public class Fridge extends SmartDevice {
 
     public Fridge(){}
 
-    public Fridge(String name, String deviceId, String description, int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
-        super(name, deviceId, description);
+    public Fridge(String name, String deviceId, String description,boolean online, int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
+        super(name, deviceId, description,online);
         this.fridgeTemp = fridgeTemp;
         this.freezerTemp = freezerTemp;
         this.inventory = inventory;
@@ -66,10 +66,7 @@ public class Fridge extends SmartDevice {
     public void setFreezerTemp(int freezerTemp) {
         this.freezerTemp = freezerTemp;
     }
-    @Override
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
+
     @Override
     public String getDeviceType() {
         return deviceType;

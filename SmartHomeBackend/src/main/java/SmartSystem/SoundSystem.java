@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 public class SoundSystem extends SmartDevice{
     private HashMap<String,Integer> playlist = new HashMap<>();
-    private String deviceType;
+    private String deviceType = "SoundSystem";
     private int volume;
 
     public SoundSystem(){}
-    public SoundSystem(String deviceName, String deviceId, String description, int volume) {
-        super(deviceName, deviceId, description);
+    public SoundSystem(String deviceName, String deviceId, String description,boolean online, int volume) {
+        super(deviceName, deviceId, description,online);
         this.volume = volume;
     }
     public int getVolume() {
@@ -27,10 +27,7 @@ public class SoundSystem extends SmartDevice{
     public HashMap<String,Integer> getPlaylist() {
         return playlist;
     }
-    @Override
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
+
     @Override
     public String getDeviceType() {
         return deviceType;

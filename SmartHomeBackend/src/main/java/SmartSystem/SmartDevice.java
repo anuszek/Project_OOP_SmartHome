@@ -15,10 +15,11 @@ public abstract class SmartDevice {
         this.deviceId = "";
     }
 
-    public SmartDevice(String name, String deviceId, String description) {
+    public SmartDevice(String name, String deviceId, String description, boolean online) {
         this.name = name;
         this.deviceId = deviceId;
         this.description = description;
+        this.online = online;
     }
     public String getName() {
         return name;
@@ -44,6 +45,5 @@ public abstract class SmartDevice {
     public String getDescription() {
         return description;
     }
-    public abstract void setDeviceType(String deviceType);
     public abstract String getDeviceType();
 }
