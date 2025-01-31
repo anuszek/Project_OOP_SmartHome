@@ -2,12 +2,12 @@ package SmartSystem;
 
 public class HeatingSystem extends SmartDevice {
     private int temperature;
-    private String deviceType;
+    private String deviceType = "HeatingSystem";
 
     public HeatingSystem(){}
 
-    public HeatingSystem(String name, String deviceId, String description, int temperature) {
-        super(name, deviceId, description);
+    public HeatingSystem(String name, String deviceId, String description,boolean online, int temperature) {
+        super(name, deviceId, description,online);
         this.temperature = temperature;
     }
     public int getTemperature() {
@@ -15,10 +15,6 @@ public class HeatingSystem extends SmartDevice {
     }
     public void setTemperature(int temperature) {
         this.temperature = temperature;
-    }
-    @Override
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
     }
     @Override
     public String getDeviceType() {
