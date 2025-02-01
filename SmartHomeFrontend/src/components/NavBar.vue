@@ -9,8 +9,16 @@
       <li @click="navigateTo('/users')"><button :class="{ active: isActive('/users') }" class="navigation">Users</button></li>
       <li @click="navigateTo('/settings')"><button :class="{ active: isActive('/settings') }" class="navigation">Settings</button></li>
       <li class="separator"></li>
-      <li @click="$emit('toggle-login')"><button id="sign_button">Log in</button></li>
-      <li @click="$emit('toggle-register')"><button id="register_button">Register</button></li>
+      <li class="sing-in">
+        <template v-if="!isLoggedIn">
+          <button id="sign_button" @click="$emit('toggle-login')">Log in</button>
+          <button id="register_button" @click="$emit('toggle-register')">Register</button>
+        </template>
+        <template v-else>
+          <span class="material-symbols-outlined nav-icon">account_circle</span>
+        </template>
+      </li>
+      
     </ul>
   </nav>
 </template>
@@ -70,10 +78,16 @@
     font-size: 3rem;
   }  
 
+  .sing-in {
+    /* background-color: aquamarine; */
+    display: flex;
+    align-items: center;
+  }
+
   .nav-icon {
-    width: 40px;
-    height: 40px;
+    font-size: 3rem;
     fill: white;
+    margin-left: 1rem;
   }
 
   .navigation {
