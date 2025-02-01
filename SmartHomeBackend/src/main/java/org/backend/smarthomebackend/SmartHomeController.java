@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api")
@@ -33,6 +34,8 @@ public class SmartHomeController {
         // handle the request
         // getDevices();
         System.out.println(body);
+        Logger logger = Logger.getLogger(SmartHomeController.class.getName());
+        logger.info("Toggling device with id: " + body.get("deviceId"));
         return ResponseEntity.ok("Device toggled");
     }
 }
