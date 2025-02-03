@@ -2,16 +2,32 @@
   <div class="device-component">
     <h2>{{ device.name }}</h2>
     <p>{{ device.description }}</p>
-    <div v-if="device.hasOwnProperty('online')">
-     <p>Device status: {{ device.online ? "Online" : "Offline" }}</p>
-      <button @click="toggleDevice">Toggle Device</button>
+    <div class="device-controls">
+      <div v-if="device.hasOwnProperty('online')" class="device-status">
+        <p>Device status:</p>
+        <p v-if="device.online" style="color: green;">Online</p>
+        <p v-else style="color: red;">Offline</p>      
+        <button @click="toggleDevice">Toggle Device</button>
+      </div>
+      <div v-if="state.isUserAdmin" >
+        <button @click="deleteDevice" >Delete Device</button>
+      </div>
     </div>
-    <p v-else></p>
   </div>
 </template>
 
 <script>
+import { inject } from 'vue';
+
 export default {
+  setup() {
+    const state = inject('state');
+    
+    return {
+      state,
+    };
+  },
+
   name: 'DeviceComponent',
   props: {
     device: {
@@ -22,7 +38,10 @@ export default {
   methods: {
     toggleDevice() {
       this.$emit('toggle-device', this.device.deviceId);    
-    }
+    },
+    deleteDevice() {
+      this.$emit('delete-device', this.device.deviceId);
+    },
   }
 }
 </script>
@@ -35,6 +54,16 @@ export default {
   text-align: center;
   background-color: #ededed;
   color: #000;
-  box-shadow: 2px 2px 7px #4CAF50;
+  box-shadow: 2px 2px 7px #646cff;
+}
+
+.device-status {
+  font-weight: bold;
+}
+
+.device-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

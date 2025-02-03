@@ -1,17 +1,13 @@
 <template>
-  <div v-if="showLogin" class="overlay" @click.self="$emit('close-login')">
+  <div v-if="state.showLogin" class="overlay" @click.self="$emit('close-login')">
     <div class="login-popup">
       <button class="close-btn" @click="$emit('close-login')">
         <span class="material-symbols-outlined">close</span>
       </button>
       <h2>Log In</h2>
       <form @submit.prevent="handleLogin">
-        <div>
-            <input type="text" placeholder="Username" id="username" v-model="username" required>
-        </div>
-        <div>
-          <input type="password" placeholder="Password" id="password" v-model="password" required>
-        </div>
+        <input v-model="username" type="text" placeholder="Username" required />
+        <input v-model="password" type="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
     </div>
@@ -20,14 +16,20 @@
 
 <script>
 import axios from 'axios';
+import { inject } from 'vue';
 
 export default {
-  data() {
+  setup() {
+    const state = inject('state');
+    const toggleLogin = inject('toggleLogin');
+    const logIn = inject('logIn');
+
     return {
-      showLogin: true,
+      state,
+      toggleLogin,
+      logIn,
       username: '',
       password: '',
-      data: {},
     };
   },
   methods: {
@@ -37,18 +39,18 @@ export default {
           username: this.username,
           password: this.password,
         });
-        
+
         if (response.data.authenticated) {
-          this.$emit('close-login');
+          this.toggleLogin();
+          this.logIn(response.data);
         } else {
-          alert('Invalid username or password');
+          alert('Login failed: ' + response.data.error);
         }
       } catch (error) {
-        console.log("Error logging in: ", error);
-        alert('Login failed. Please try again later.');
+        console.error('Login error:', error);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -91,13 +93,10 @@ export default {
   color: black;
 }
 
-form div {
-  margin-bottom: 30px;
-}
-
 form input {
   width: 80%;
   padding: 15px;
+  margin-bottom: 30px;
   border-radius: 5px;
   font-size: x-large;
   box-sizing: border-box;

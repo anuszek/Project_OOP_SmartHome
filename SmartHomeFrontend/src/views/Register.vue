@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showRegister" class="register-overlay" @click.self="$emit('close-register')">
+  <div v-if="state.showRegister" class="register-overlay" @click.self="$emit('close-register')">
     <div class="register-popup">
       <button class="close-btn" @click="$emit('close-register')">
         <span class="material-symbols-outlined">close</span>
@@ -20,16 +20,23 @@
 
 <script>
 import axios from 'axios';
+import { inject } from 'vue';
 
 export default {
-  data() {
+  setup() {
+    const state = inject('state');
+    const toggleRegister = inject('toggleRegister');
+    const logIn = inject('logIn');
+
     return {
-      showRegister: true,
+      state,
+      toggleRegister,
+      logIn,
       username: '',
       password: '',
-      data: {},
     };
   },
+
   methods: {
     async handleRegister() {
       try {
@@ -37,9 +44,10 @@ export default {
           username: this.username,
           password: this.password,
         });
-
+        
         if (response.data.authenticated) {
-          this.$emit('close-register');
+          this.toggleRegister();
+          this.logIn(response.data);
         }
       } catch (error) {
         console.log("Error creating user: ", error);

@@ -1,23 +1,35 @@
 <template>
   <div>
-    <h1>Devices</h1>
-    <p>Manage your devices here.</p>
+    <h3>Manage your devices here.</h3>
   </div>
-  <div class="device-list">
+  <div v-if="state.isUserAdmin">
+    <button>Add Device</button>
+  </div>
+  <div v-if="state.isLoggedIn" class="device-list">
     <DeviceComponent
       v-for="device in devices"
       :key="device.deviceId"
       :device="device"
       @toggle-device="handleToggleDevice"
+      @delete-device="handleDeleteDevice"
     />
   </div>
 </template>
 
 <script>
-  import DeviceComponent from '../components/DeviceComponent.vue';
+  import { inject } from 'vue';
   import axios from 'axios';
+  import DeviceComponent from '../components/DeviceComponent.vue';
 
   export default {
+    setup() {
+      const state = inject('state');
+
+      return {
+        state,
+      };
+    },
+
     data() {
       return {
         devices: [],
@@ -41,7 +53,6 @@
             }      
             devices.sort((a, b) => a.name.localeCompare(b.name));
             this.devices = devices;
-            console.log(this.devices);    
           })
           .catch((error) => {
             console.log("Error fetching data: ", error);
@@ -53,7 +64,7 @@
             deviceId: deviceId,
           });
         
-          if (response.data.success) {
+          if (response.data) {
             const device = this.devices.find((d) => d.deviceId === deviceId);
             if (device) {
               device.online = !device.online;
@@ -63,6 +74,20 @@
           console.log("Error toggling device: ", error);
         }
       },
+      async handleDeleteDevice(deviceId) {
+        try {
+          const response = await axios.post('http://localhost:8080/api/delete-device', {
+            deviceId: deviceId,
+          });
+        
+          if (response.data.success) {
+            this.fetchDevices();
+          }
+        } catch (error) {
+          console.log("Error deleting device: ", error);
+        }
+      },
+
     },
   };
 
