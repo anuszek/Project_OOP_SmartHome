@@ -8,6 +8,7 @@ import Settings from '../views/Settings.vue'
 import AddDevice from '../views/AddDevice.vue'
 import Fridge from '../views/devices/Fridge.vue'
 import Lights from '../views/devices/Lights.vue'
+import Heating from '../views/devices/Heating.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -17,7 +18,8 @@ const routes = [
   {path: '/settings', component: Settings},
   {path: '/add-device', component: AddDevice},
   {path: '/fridge', component: Fridge},
-  {path: '/lights', component: Lights}
+  {path: '/lights', component: Lights},
+  {path: '/heating', component: Heating}
 ];
 
 const router = createRouter({
