@@ -22,3 +22,8 @@ npm run test
 ```
 npm run lint
 ```
+
+### Additional packages
+```
+vuex@next
+```

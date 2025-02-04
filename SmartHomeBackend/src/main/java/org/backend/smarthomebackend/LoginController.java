@@ -66,6 +66,11 @@ public class LoginController {
         String result = dbUserLogin.register(username, password);
         logger.info("Register result for username {}: {}", username, result);
 
-        return ResponseEntity.ok(Map.of("result", result));
+        Map<String, Object> response = new HashMap<>();
+        response.put("authenticated", true);
+        response.put("isAdmin", false);
+        response.put("userData", dbUserLogin.returnUserData(username));
+
+        return ResponseEntity.ok(response);
     }
 }
