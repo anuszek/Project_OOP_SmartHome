@@ -1,6 +1,9 @@
 <template>
   <div>
     <div v-if="state.isLoggedIn">
+      <div v-if="state.userName == 'AdamusLech'">
+        <img src="../assets/adamus.png" alt="" style="width: 100px; height: 100px;">
+      </div>
       <h1>Hello {{ state.userName }}</h1>
       <button @click="logOut">Log Out</button>
     </div>

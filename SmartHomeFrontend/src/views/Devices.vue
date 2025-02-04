@@ -3,7 +3,7 @@
     <h3>Manage your devices here.</h3>
   </div>
   <div v-if="state.isUserAdmin">
-    <button>Add Device</button>
+    <button @click="navigateTo('/add-device')" >Add Device</button>
   </div>
   <div v-if="state.isLoggedIn" class="device-list">
     <DeviceComponent
@@ -87,7 +87,9 @@
           console.log("Error deleting device: ", error);
         }
       },
-
+      navigateTo(path) {
+        this.$router.push(path);
+      },
     },
   };
 

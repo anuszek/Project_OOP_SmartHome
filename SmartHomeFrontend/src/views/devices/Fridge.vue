@@ -1,0 +1,13 @@
+<template>
+  <div>
+    <h1>Fridge</h1>
+    <div>
+      <h2>Temperature</h2>
+      <p>°C</p>
+    </div>
+    <div>
+      <h2>Humidity</h2>
+      <p>%</p>
+    </div>
+  </div>
+</template>
