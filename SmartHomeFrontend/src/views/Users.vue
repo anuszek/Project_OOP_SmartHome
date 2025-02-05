@@ -5,6 +5,12 @@
         <img src="../assets/adamus.png" alt="" style="width: 100px; height: 100px;">
       </div>
       <h1>Hello {{ state.userName }}</h1>
+      <div v-if="state.isUserAdmin">
+        <ul>
+          users:
+          <!-- <li v-for="user in users" :key="user.id">{{ user.name }}</li> -->
+        </ul>
+      </div>
       <button @click="logOut">Log Out</button>
     </div>
     <div v-else>

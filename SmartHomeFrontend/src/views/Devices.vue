@@ -1,18 +1,27 @@
 <template>
-  <div>
-    <h3>Manage your devices here.</h3>
+  <div v-if="state.isLoggedIn">
+    <div v-if="selectedDevice" class="device-panel">
+      <component :is="selectedDeviceComponent" :device="selectedDevice" />
+      <button @click="clearSelectedDevice">Back to Devices</button>
+    </div>
+    <div v-else>
+      <div>
+        <h1>Manage your devices here.</h1>
+      </div>
+        <div v-if="state.isUserAdmin">
+          <button @click="navigateTo('/add-device')" >Add Device</button>
+        </div>
+      <div class="device-list">
+        <DeviceComponent
+          v-for="device in devices"
+          :key="device.deviceId"
+          :device="device"
+          @toggle-device="handleToggleDevice"
+          @delete-device="handleDeleteDevice"
+          @display-device="displayDevice"
+        />
+      </div>
   </div>
-  <div v-if="state.isUserAdmin">
-    <button @click="navigateTo('/add-device')" >Add Device</button>
-  </div>
-  <div v-if="state.isLoggedIn" class="device-list">
-    <DeviceComponent
-      v-for="device in devices"
-      :key="device.deviceId"
-      :device="device"
-      @toggle-device="handleToggleDevice"
-      @delete-device="handleDeleteDevice"
-    />
   </div>
 </template>
 
@@ -20,6 +29,9 @@
   import { inject } from 'vue';
   import axios from 'axios';
   import DeviceComponent from '../components/DeviceComponent.vue';
+  import Fridge from '../components/devices/Fridge.vue';
+  import Heating from '../components/devices/Heating.vue';
+  import Lights from '../components/devices/Lights.vue';
 
   export default {
     setup() {
@@ -33,10 +45,15 @@
     data() {
       return {
         devices: [],
+        selectedDevice: null,
+        selectedDeviceComponent: null,
       };
     },
     components: {
       DeviceComponent,
+      Fridge,
+      Heating,
+      Lights,
     },
     async mounted() {
       await this.fetchDevices();
@@ -90,12 +107,55 @@
       navigateTo(path) {
         this.$router.push(path);
       },
+      displayDevice(device){
+        this.selectedDevice = device;
+        window.scrollTo(0, 0);
+        switch (device.name) {
+          case "Blinds":
+            break;
+          case "Fridge":
+            this.selectedDeviceComponent = 'Fridge';
+            break;
+          case "Heating System":
+            console.log(device);
+            
+            this.selectedDeviceComponent = 'Heating';
+            break;
+          case "Living Room Lights":
+            this.selectedDeviceComponent = 'Lights';
+            break;
+          case "Locks":
+            break;
+          case "Oven":
+            break;
+          case "Rumba":
+            break;
+          case "Sound System":
+            break;
+          default:
+            break;
+        }
+      },
+      clearSelectedDevice() {
+        window.scrollTo(0, 0);
+        this.selectedDevice = null;
+        this.selectedDeviceComponent = null;
+      },
     },
   };
 
 </script>
 
 <style scoped>
+  .device-panel {
+    padding: 20px;
+    border: 5px solid #ccc;
+    border-radius: 10px;
+    width: 60vw;
+    height: 80vh;
+    margin: auto;
+    box-shadow: 2px 2px 7px #646cff;
+  }
   .device-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

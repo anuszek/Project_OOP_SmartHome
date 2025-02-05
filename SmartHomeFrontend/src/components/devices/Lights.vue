@@ -47,13 +47,16 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 90%;
     width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
   }
 
   .color-input {
     height: 20vh;
     width: 20vh; 
+    cursor: pointer;
   }
 
 </style>
