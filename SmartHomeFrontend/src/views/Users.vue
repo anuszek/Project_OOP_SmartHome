@@ -8,7 +8,7 @@
       <div v-if="state.isUserAdmin">
         <ul>
           users:
-          <!-- <li v-for="user in users" :key="user.id">{{ user.name }}</li> -->
+          <li v-for="user in users" :key="user.id">{{ user.name }}</li>
         </ul>
       </div>
       <button @click="logOut">Log Out</button>
@@ -31,6 +31,17 @@ export default {
       state,
       logOut,
     };
+  },
+  data() {
+    return {
+      users: [],
+    };
+  },
+  methods: {
+    async fetchUsers() {
+      const response = await axios.get('http://localhost:8080/api/users');
+      this.users = response.data;
+    },
   },
 };
 </script>

@@ -24,6 +24,7 @@
       </div>
       <div class="weather">
         <h2>Weather</h2>
+        <span v-if="weather" class="material-symbols-outlined" style="font-size: 80px;">{{ weatherIcon }}</span>
         <p v-if="weather">{{ weather.description }}, {{ weather.temp }}°C</p>
         <p v-else>Loading...</p>
       </div>
@@ -68,6 +69,7 @@ export default {
         { id: 2, description: 'Thermostat set to 22°C' },
       ],
       weather: null,
+      weatherIcon: null,
       energyConsumption: 150,
       notifications: [
         { id: 1, message: 'Front door left open' },
@@ -94,14 +96,51 @@ export default {
         .then(response => {
           const data = response.data;
           this.weather = {
+            main: data.weather[0].main,
             description: data.weather[0].description,
             temp: data.main.temp,
           };
+          this.assignWeatherIcon();
         })
         .catch(error => {
           console.error('Error fetching weather data:', error);
         });
-    }
+    },
+    assignWeatherIcon(){
+      if (this.weather){
+        const description = this.weather.main.toLowerCase();
+        console.log(description);
+        
+        switch (description) {
+          case 'clear':
+            this.weatherIcon = 'wb_sunny';
+            break;
+          case 'few clouds':
+            this.weatherIcon = 'partly_cloudy_day';
+            break;
+          case 'clouds':
+            this.weatherIcon = 'cloud';
+            break;
+          case 'drizzle':
+            this.weatherIcon = 'rainy_light';
+            break;
+          case 'rain':
+            this.weatherIcon = 'rainy';
+            break;
+          case 'thunderstorm':
+            this.weatherIcon = 'thunderstorm';
+            break;
+          case 'snow':
+            this.weatherIcon = 'weather_snowy';
+            break;
+          case 'mist':
+            this.weatherIcon = 'mist';
+            break;
+          default:
+            break;
+        }
+      }
+    },
   },
   mounted() {
     this.fetchWeather();
