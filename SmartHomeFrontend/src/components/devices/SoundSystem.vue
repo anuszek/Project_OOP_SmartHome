@@ -6,7 +6,7 @@
       <h4 class="material-symbols-outlined">Volume: {{ volume == 0 ? "volume_off" : volume }}</h4>
       <input type="range" class="slider" v-model="volume" min="0" max="100" step="5">
    
-      <h4>Track: {{  }}</h4>
+      <h4>Track: </h4>
     
       <div>
         <button>
@@ -42,10 +42,6 @@ export default {
       // currentTrack: this.tracks[0],
     };
   },
-  mounted() {
-    console.log(this.device);
-    
-  },
   methods: {
     togglePower() {
       this.powerState = !this.powerState;
@@ -53,8 +49,7 @@ export default {
     confirmChanges() {
       this.$emit("update-device", {
         ...this.device,
-        playlist: {},
-        volume: this.volume,
+        volume: parseInt(this.volume),
       });
     }
   }

@@ -70,7 +70,7 @@ export default {
       ],
       weather: null,
       weatherIcon: null,
-      energyConsumption: 150,
+      energyConsumption: Math.floor(Math.random() * 1000),
       notifications: [
         { id: 1, message: 'Front door left open' },
         { id: 2, message: 'Motion detected in the backyard' },
