@@ -39,7 +39,7 @@ export default {
         }
         
       } catch (error) {
-        console.error('Login error:', error);
+        console.error('Error:', error);
       }
     },
   },

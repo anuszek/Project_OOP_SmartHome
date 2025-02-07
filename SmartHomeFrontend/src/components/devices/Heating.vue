@@ -1,8 +1,9 @@
 <template>
   <div class="heating-control-panel">
     <h1>Heating Control</h1>
+    <span class="material-symbols-outlined" style="font-size: 100px;">mode_heat_cool</span>
     <div class="heating-status">
-      <h3>Status: {{ device.online ? "ON" : "OFF" }}</h3>
+      <h3>Status: {{ device.temperature > temperature ? "COOLING" : "HEATING" }}</h3>
     </div>
 
     <div class="container">
@@ -15,7 +16,7 @@
       <h3>Set Target Temperature</h3>
       <input type="range" v-model="temperature" min="15" max="28" step="1" class="slider">
       <p>Target Temperature: {{ temperature }}°C</p>
-      <button>Confirm</button>
+      <button @click="confirmChanges">Confirm</button>
     </div>
     
     <!-- <div class="heating-mode">
@@ -43,6 +44,14 @@ export default {
       temperature: this.device.temperature,
       mode: "auto"
     };
+  },
+  methods: {
+    confirmChanges() {
+      this.$emit("update-device", {
+        ...this.device,
+        temperature: parseInt(this.temperature),
+      });
+    }
   },
 };
 </script>
@@ -75,10 +84,4 @@ export default {
   padding: 5px;
 }
 
-.slider {
-  height: 25px;
-  -webkit-appearance: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 </style>

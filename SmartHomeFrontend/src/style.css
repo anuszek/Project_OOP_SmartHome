@@ -64,6 +64,13 @@ button:focus-visible {
   padding: 2em;
 }
 
+.slider {
+  height: 25px;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 #app {
   max-width: auto;
   margin: 0 auto;

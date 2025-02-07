@@ -1,11 +1,14 @@
 <template>
-  <div :style="{ backgroundColor: color }" class="container">
-    <h1 :style="{ color: complementaryColor }">Lights</h1>
-    <h3 :style="{ color: complementaryColor }">Pick light color</h3>
+  <div :style="{ backgroundColor: color, color: complementaryColor }" class="container">
+    <h1>Lights</h1>
+    <span class="material-symbols-outlined" style="font-size: 80px;">lightbulb_2</span>
+    <h3>Pick light color</h3>
     <input type="color" v-model="color" @input="updateColor" class="color-input">
-    <div>
-      <h4 :style="{ color: complementaryColor, fontWeight: bold }">{{ `selected color: ${color}` }}</h4>
-      <div :style="{ backgroundColor: color, width: '100px', height: '100px' }"></div>
+    <h4>{{ `selected color: ${color}` }}</h4>
+    <label>Brightness: {{ brightness }}</label>
+    <input type="range" class="slider" v-model="brightness"  min="0" max="100" > 
+    <div class="confirm-button">
+      <button @click="confirmChanges">Confirm</button>
     </div>
   </div>
 </template>
@@ -16,9 +19,6 @@ import { ref, computed } from 'vue';
 export default {
   setup() {
     const color = ref('#ffffff');
-
-    
-
     const updateColor = (event) => {
       color.value = event.target.value;
     };
@@ -37,11 +37,31 @@ export default {
       complementaryColor,
     };
   },
+  props: {
+    device: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      brightness: this.device.lightLevel,
+      color: this.device.lightColor
+    };
+  },
+  methods: {
+    confirmChanges() {
+      this.$emit("update-device", {
+        ...this.device,
+        lightLevel: this.brightness,
+        lightColor: this.color,
+      });
+    }
+  },
 };
 </script>
 
 <style scoped>
-
   .container {
     display: flex;
     flex-direction: column;
@@ -52,11 +72,12 @@ export default {
     margin-bottom: 10px;
     border-radius: 5px;
   }
-
   .color-input {
-    height: 20vh;
-    width: 20vh; 
+    height: 8vh;
+    width: 32vh; 
     cursor: pointer;
   }
-
+  .confirm-button {
+    margin-top: 20px;
+  }
 </style>

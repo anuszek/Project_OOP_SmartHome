@@ -1,7 +1,7 @@
 <template>
   <div v-if="state.isLoggedIn">
     <div v-if="selectedDevice" class="device-panel">
-      <component :is="selectedDeviceComponent" :device="selectedDevice" />
+      <component :is="selectedDeviceComponent" :device="selectedDevice" @update-device="handleUpdateDevice"/>
       <button @click="clearSelectedDevice">Back to Devices</button>
     </div>
     <div v-else>
@@ -32,6 +32,11 @@
   import Fridge from '../components/devices/Fridge.vue';
   import Heating from '../components/devices/Heating.vue';
   import Lights from '../components/devices/Lights.vue';
+  import Blinds from '../components/devices/Blinds.vue';
+  import Locks from '../components/devices/Locks.vue';
+  import Oven from '../components/devices/Oven.vue';
+  import Rumba from '../components/devices/Rumba.vue';
+  import SoundSystem from '../components/devices/SoundSystem.vue';
 
   export default {
     setup() {
@@ -47,13 +52,19 @@
         devices: [],
         selectedDevice: null,
         selectedDeviceComponent: null,
+        scrollPosition: 0,
       };
     },
     components: {
       DeviceComponent,
+      Blinds,
       Fridge,
       Heating,
       Lights,
+      Locks,
+      Oven,
+      Rumba,
+      SoundSystem,
     },
     async mounted() {
       await this.fetchDevices();
@@ -91,6 +102,22 @@
           console.log("Error toggling device: ", error);
         }
       },
+      async handleUpdateDevice(device){
+        console.log(device);
+        
+        let deviceId = device.deviceId;
+        let properties = {};     
+        try {
+          const response = await axios.post('http://localhost:8080/api/update-device', device);
+          
+          if (response.data) {
+           console.log("Device updated successfully");
+           
+          }          
+        } catch (error) {
+          console.log("Error updating device: ", error);
+        }
+      },
       async handleDeleteDevice(deviceId) {
         try {
           const response = await axios.post('http://localhost:8080/api/delete-device', {
@@ -108,38 +135,44 @@
         this.$router.push(path);
       },
       displayDevice(device){
+        // console.log(device);
         this.selectedDevice = device;
+        this.scrollPosition = window.scrollY;
         window.scrollTo(0, 0);
         switch (device.name) {
           case "Blinds":
+            this.selectedDeviceComponent = 'Blinds';
             break;
           case "Fridge":
             this.selectedDeviceComponent = 'Fridge';
             break;
           case "Heating System":
-            console.log(device);
-            
             this.selectedDeviceComponent = 'Heating';
             break;
           case "Living Room Lights":
             this.selectedDeviceComponent = 'Lights';
             break;
-          case "Locks":
+          case "Front Door":
+            this.selectedDeviceComponent = 'Locks';
             break;
           case "Oven":
+            this.selectedDeviceComponent = 'Oven';
             break;
           case "Rumba":
+            this.selectedDeviceComponent = 'Rumba';
             break;
-          case "Sound System":
+          case "Living Room Speaker":
+            this.selectedDeviceComponent = 'SoundSystem';
             break;
           default:
             break;
         }
       },
       clearSelectedDevice() {
-        window.scrollTo(0, 0);
         this.selectedDevice = null;
-        this.selectedDeviceComponent = null;
+        this.$nextTick(() => {
+          window.scrollTo(0, this.scrollPosition);
+        });
       },
     },
   };

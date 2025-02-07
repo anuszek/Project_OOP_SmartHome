@@ -109,8 +109,7 @@ export default {
     assignWeatherIcon(){
       if (this.weather){
         const description = this.weather.main.toLowerCase();
-        console.log(description);
-        
+       
         switch (description) {
           case 'clear':
             this.weatherIcon = 'wb_sunny';

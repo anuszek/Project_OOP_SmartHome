@@ -8,15 +8,9 @@
         <p v-if="device.online" style="color: green;">Online</p>
         <p v-else style="color: red;">Offline</p>      
       </div>
-      <div>
-        <button @click="toggleDevice">Toggle Device</button>
-      </div>
-      <div>
-        <button @click="handleDevice">Properties</button>
-      </div>
-      <div v-if="state.isUserAdmin" >
-        <button @click="deleteDevice" >Delete Device</button>
-      </div>
+      <button @click="handleDevice">Properties</button>   
+      <button v-if="state.isUserAdmin" @click="toggleDevice">Toggle Device</button>
+      <button v-if="state.isUserAdmin"  @click="deleteDevice" >Delete Device</button>
     </div>
   </div>
 </template>

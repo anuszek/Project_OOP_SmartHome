@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Smart Fridge</h1>
     <span class="material-symbols-outlined" style="font-size: 100px;">kitchen</span>
     <div>
       <h2>Fridge temperature</h2>
