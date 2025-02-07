@@ -1,18 +1,27 @@
 <template>
-  <div>
-    <h3>Manage your devices here.</h3>
+  <div v-if="state.isLoggedIn">
+    <div v-if="selectedDevice" class="device-panel">
+      <component :is="selectedDeviceComponent" :device="selectedDevice" @update-device="handleUpdateDevice"/>
+      <button @click="clearSelectedDevice">Back to Devices</button>
+    </div>
+    <div v-else>
+      <div>
+        <h1>Manage your devices here.</h1>
+      </div>
+        <div v-if="state.isUserAdmin">
+          <button @click="navigateTo('/add-device')" >Add Device</button>
+        </div>
+      <div class="device-list">
+        <DeviceComponent
+          v-for="device in devices"
+          :key="device.deviceId"
+          :device="device"
+          @toggle-device="handleToggleDevice"
+          @delete-device="handleDeleteDevice"
+          @display-device="displayDevice"
+        />
+      </div>
   </div>
-  <div v-if="state.isUserAdmin">
-    <button @click="navigateTo('/add-device')" >Add Device</button>
-  </div>
-  <div v-if="state.isLoggedIn" class="device-list">
-    <DeviceComponent
-      v-for="device in devices"
-      :key="device.deviceId"
-      :device="device"
-      @toggle-device="handleToggleDevice"
-      @delete-device="handleDeleteDevice"
-    />
   </div>
 </template>
 
@@ -20,6 +29,14 @@
   import { inject } from 'vue';
   import axios from 'axios';
   import DeviceComponent from '../components/DeviceComponent.vue';
+  import Fridge from '../components/devices/Fridge.vue';
+  import Heating from '../components/devices/Heating.vue';
+  import Lights from '../components/devices/Lights.vue';
+  import Blinds from '../components/devices/Blinds.vue';
+  import Locks from '../components/devices/Locks.vue';
+  import Oven from '../components/devices/Oven.vue';
+  import Rumba from '../components/devices/Rumba.vue';
+  import SoundSystem from '../components/devices/SoundSystem.vue';
 
   export default {
     setup() {
@@ -33,10 +50,21 @@
     data() {
       return {
         devices: [],
+        selectedDevice: null,
+        selectedDeviceComponent: null,
+        scrollPosition: 0,
       };
     },
     components: {
       DeviceComponent,
+      Blinds,
+      Fridge,
+      Heating,
+      Lights,
+      Locks,
+      Oven,
+      Rumba,
+      SoundSystem,
     },
     async mounted() {
       await this.fetchDevices();
@@ -74,6 +102,22 @@
           console.log("Error toggling device: ", error);
         }
       },
+      async handleUpdateDevice(device){
+        console.log(device);
+        
+        let deviceId = device.deviceId;
+        let properties = {};     
+        try {
+          const response = await axios.post('http://localhost:8080/api/update-device', device);
+          
+          if (response.data) {
+           console.log("Device updated successfully");
+           
+          }          
+        } catch (error) {
+          console.log("Error updating device: ", error);
+        }
+      },
       async handleDeleteDevice(deviceId) {
         try {
           const response = await axios.post('http://localhost:8080/api/delete-device', {
@@ -90,12 +134,61 @@
       navigateTo(path) {
         this.$router.push(path);
       },
+      displayDevice(device){
+        // console.log(device);
+        this.selectedDevice = device;
+        this.scrollPosition = window.scrollY;
+        window.scrollTo(0, 0);
+        switch (device.name) {
+          case "Blinds":
+            this.selectedDeviceComponent = 'Blinds';
+            break;
+          case "Fridge":
+            this.selectedDeviceComponent = 'Fridge';
+            break;
+          case "Heating System":
+            this.selectedDeviceComponent = 'Heating';
+            break;
+          case "Living Room Lights":
+            this.selectedDeviceComponent = 'Lights';
+            break;
+          case "Front Door":
+            this.selectedDeviceComponent = 'Locks';
+            break;
+          case "Oven":
+            this.selectedDeviceComponent = 'Oven';
+            break;
+          case "Rumba":
+            this.selectedDeviceComponent = 'Rumba';
+            break;
+          case "Living Room Speaker":
+            this.selectedDeviceComponent = 'SoundSystem';
+            break;
+          default:
+            break;
+        }
+      },
+      clearSelectedDevice() {
+        this.selectedDevice = null;
+        this.$nextTick(() => {
+          window.scrollTo(0, this.scrollPosition);
+        });
+      },
     },
   };
 
 </script>
 
 <style scoped>
+  .device-panel {
+    padding: 20px;
+    border: 5px solid #ccc;
+    border-radius: 10px;
+    width: 60vw;
+    height: 80vh;
+    margin: auto;
+    box-shadow: 2px 2px 7px #646cff;
+  }
   .device-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
