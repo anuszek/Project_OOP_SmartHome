@@ -13,9 +13,9 @@
         <input class="input" type="text" v-model="description" placeholder="Description">
       </div>
       <div class="form-buttons">
-      <button type="submit">Confirm</button>
-      <button @click="navigateToDevices">Cancel</button>
-    </div>
+        <button @click="navigateToDevices">Cancel</button>
+        <button type="submit">Confirm</button>
+      </div>
     </form>
   </div>
 </template>
@@ -60,58 +60,45 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .add-device {
   color: black;
   width: 40vw;
-  height: 60vh;
-  margin: 0 auto;
-  padding: 30px;
+  min-height: 60vh; 
+  padding: 20px;
   border-radius: 5px;
   background-color: #ededed;
   box-shadow: 2px 2px 7px #646cff;
 }
 
-.add-device h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .form-group {
-  /* display: flex; */
-  align-items: center;
   margin-bottom: 15px;
-  width: 50%;
 }
 
 .form-group label {
-  flex: 1.2;
-  margin-bottom: 20px;
+  display: block;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
-.form-buttons{
-  display: flex;
-  gap: 10px;
-}
-
-.input {
- height: 3vh;
- margin-bottom: 15px;
-}
-
-.form-group select {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.form-group select,
+.form-group input {
+  width: 60%;
+  margin-bottom: 10px;
+  padding: 8px;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-around;
+  justify-content: space-evenly;
+}
+
+.form-buttons button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
 }
 </style>

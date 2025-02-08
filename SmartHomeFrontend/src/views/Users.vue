@@ -18,7 +18,7 @@
       </div>
     </div>
     <div v-else>
-      <p>hello, please log in</p>
+      <h2>Please log in to see the timetable.</h2>
     </div>
   </div>
 </template>
@@ -67,28 +67,28 @@ export default {
         console.error('Error fetching users:', error);
       });
     },
-    async removeUser(userName) {
-      if (userName == this.state.userName) {
+    async removeUser(username) {
+      if (username == this.state.userName) {
         alert("You can't delete yourself");
         return;
       }
       try {
           const response = await axios.post('http://localhost:8080/api/delete-user', {
-            userName,
+            username,
           });
         
           if (response.data == "User deleted") {
             alert("User deleted successfully");
-            this.users = this.users.filter((user) => user.name !== userName);
+            this.users = this.users.filter((user) => user.name !== username);
           }
         } catch (error) {
           console.log("Error deleting user: ", error);
         }
     },
-    async grantAdmin(userName) {
+    async grantAdmin(username) {
       try {
           const response = await axios.post('http://localhost:8080/api/grant-admin', {
-            userName,
+            username,
           });
         
           if (response) {
