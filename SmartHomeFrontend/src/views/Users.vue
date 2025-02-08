@@ -60,7 +60,7 @@ export default {
       });
     },
     async removeUser(userName) {
-      if (userName == state.userName) {
+      if (userName == this.state.userName) {
         alert("You can't delete yourself");
         return;
       }
@@ -70,7 +70,7 @@ export default {
           });
         
           if (response.data) {
-            console.log("User deleted successfully");
+            alert("User deleted successfully");
             this.users = this.users.filter((user) => user.name !== userName);
           }
         } catch (error) {
