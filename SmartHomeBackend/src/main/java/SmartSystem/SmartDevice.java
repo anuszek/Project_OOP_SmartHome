@@ -9,22 +9,23 @@ public abstract class SmartDevice {
     @JsonProperty
     private boolean online;
     private String deviceId;
+    private static String deviceID2;
     @JsonProperty
 
     private static int deviceCount = DbDevicesInterface.countDevices();
 
     {
         deviceCount++;
-        deviceId = "Device" + deviceCount;
+        deviceID2 = "Device" + deviceCount;
     }
 
     public SmartDevice(){
-        this.deviceId = "";
+        this.deviceId = deviceID2;
     }
 
     public SmartDevice(String name, String description) {
         this.name = name;
-        this.deviceId = deviceId;
+        this.deviceId = deviceID2;
         this.description = description;
         this.online = false;
     }
@@ -45,12 +46,10 @@ public abstract class SmartDevice {
     public String getDeviceId() {
         return deviceId;
     }
-    public void turnOn() {
-        online = true;
+    public void toggle() {
+        online = !online;
     }
-    public void turnOff() {
-        online = false;
-    }
+
     public boolean isOnline() {
         return online;
     }

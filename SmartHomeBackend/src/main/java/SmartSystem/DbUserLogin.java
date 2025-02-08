@@ -46,37 +46,46 @@ public class DbUserLogin {
         return null;
     }
     public String register(String username, String password) {
-
-        String sql = "INSERT INTO Users(username, password,isAdmin) VALUES(?, ?, ?)";
         if (checkIfUserExists(username)) {
             return "User already exists";
         }
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            pstmt.setBoolean(3, false);
-            pstmt.executeUpdate();
-            return "User registered successfully";
+
+        String sql = "INSERT INTO Users (username, password,isAdmin) VALUES (?, ?, false)";
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            conn.setAutoCommit(false); // Disable auto-commit
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, username);
+                pstmt.setString(2, password);
+                pstmt.executeUpdate();
+                conn.commit();
+                return "User registered successfully";
+            } catch (SQLException e) {
+
+                e.printStackTrace();
+                return "Error occurred during registration";
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Error occurred during registration";
         }
-        return "Error registering user";
     }
-    public static Boolean checkIfUserExists(String username){
-        String sql = "SELECT COUNT(*) FROM Users WHERE username = ?";
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL);
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
+
+    public boolean checkIfUserExists(String username) {
+        String query = "SELECT COUNT(*) FROM Users WHERE username = ?";
+        try (Connection connection = DriverManager.getConnection(DB_URL);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
     public static HashMap<String, Boolean> getAllUsersList() {
         HashMap<String, Boolean> usersList = new HashMap<>();
@@ -98,14 +107,16 @@ public class DbUserLogin {
         String sql = "DELETE FROM Users WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            conn.setAutoCommit(false);
             pstmt.setString(1, username);
-            pstmt.executeUpdate();
-            conn.commit();
-            return 1;
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                return 1; // User deleted successfully
+            } else {
+                return 0; // User not found
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            return -1; // Error occurred
         }
     }
     public static String grantAdmin(String username) {
