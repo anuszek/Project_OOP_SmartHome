@@ -33,10 +33,10 @@ public class SmartHomeController {
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         int response = DbUserLogin.deleteUser(username);
-        if (response == 0) {
-            return ResponseEntity.badRequest().body("User not deleted");
-        }else{
+        if (response == 1) {
             return ResponseEntity.ok("User deleted");
+        }else{
+            return ResponseEntity.badRequest().body("User not deleted");
         }
     }
 

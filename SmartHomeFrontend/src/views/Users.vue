@@ -53,7 +53,15 @@ export default {
     async fetchUsers() {
       await axios.get('http://localhost:8080/api/users')
       .then((response) => {
-        this.users = response.data;
+        this.users = []
+        Object.values(response.data).forEach((obj) => {
+          Object.keys(obj).forEach((key) => {
+            this.users.push({
+              name: key,
+              isAdmin: obj[key],
+            });
+          });
+        });      
       })
       .catch((error) => {
         console.error('Error fetching users:', error);
@@ -69,7 +77,7 @@ export default {
             userName,
           });
         
-          if (response.data) {
+          if (response.data == "User deleted") {
             alert("User deleted successfully");
             this.users = this.users.filter((user) => user.name !== userName);
           }
