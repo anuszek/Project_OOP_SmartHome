@@ -31,19 +31,22 @@ public class SmartHomeController {
 
     @PostMapping("/delete-user")
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> body) {
-        // get user name from request body
-        // delete specified user
-        System.out.println(body);
-        return ResponseEntity.ok("User deleted");
+        String username = body.get("username");
+        int response = DbUserLogin.deleteUser(username);
+        if (response == 0) {
+            return ResponseEntity.badRequest().body("User not deleted");
+        }else{
+            return ResponseEntity.ok("User deleted");
+        }
     }
 
-    @PostMapping("/user-admin")
-    public ResponseEntity<String> userAdmin(@RequestBody Map<String, String> body) {
-        // get user name from request body
-        // make user admin
-        System.out.println(body);
-        return ResponseEntity.ok("User admin");
-    }
+   @PostMapping("/user-admin")
+   public ResponseEntity<String> userAdmin(@RequestBody Map<String, String> body) {
+       String username = body.get("username");
+       System.out.println(body);
+       String response = DbUserLogin.grantAdmin(username);
+       return ResponseEntity.ok(response);
+   }
 
     @GetMapping("/devices")
     public Map<String, Object> getDevices(){

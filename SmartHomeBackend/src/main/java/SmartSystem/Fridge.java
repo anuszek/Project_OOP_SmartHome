@@ -8,18 +8,22 @@ import java.util.List;
 public class Fridge extends SmartDevice {
     private String deviceType = "Fridge";
     @JsonProperty
-    private List<String> inventory;
+    private List<String> inventory = new ArrayList<>();
     @JsonProperty
     private boolean Skyrim = false;
     @JsonProperty
-    private int fridgeTemp;
+    private int fridgeTemp = 7;
     @JsonProperty
-    private int freezerTemp;
+    private int freezerTemp = -5;
 
     public Fridge(){}
 
-    public Fridge(String name, String deviceId, String description,boolean online, int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
-        super(name, deviceId, description,online);
+    public Fridge(String name, String description) {
+        super(name, description);
+    }
+
+    public Fridge(String name, String description,boolean online, String deviceId,int fridgeTemp, int freezerTemp, List<String> inventory, boolean Skyrim) {
+        super(name, description, online, deviceId);
         this.fridgeTemp = fridgeTemp;
         this.freezerTemp = freezerTemp;
         this.inventory = inventory;

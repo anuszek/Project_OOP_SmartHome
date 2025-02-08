@@ -9,14 +9,13 @@ public class DbDevicesInterface {
     private static final Logger logger = Logger.getLogger(DbDevicesInterface.class.getName());
     private static final String DB_URL = "jdbc:sqlite:SmartHomeBackend/src/main/resources/DB/Devices";
 
-    public static void insertDevice(String deviceType, String deviceId ,String deviceData) {
-        String sql = "INSERT INTO Devices(deviceType, deviceID, deviceData) VALUES(?, ?, ?)";
+    public static void addDevice(String deviceID, String deviceData) {
+        String sql = "INSERT INTO Devices(deviceData) VALUES(?,?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(3, deviceData);
-            pstmt.setString(1, deviceType);
-            pstmt.setString(2, deviceId);
+            pstmt.setString(1, deviceID);
+            pstmt.setString(2, deviceData);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
             logger.severe("Error inserting device: " + ex.getMessage());
@@ -79,5 +78,19 @@ public class DbDevicesInterface {
         }
 
         return deviceData;
+    }
+    public static int countDevices() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM Devices";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            count = rs.getInt(1);
+        } catch (SQLException ex) {
+            logger.severe("Error counting devices: " + ex.getMessage());
+        }
+
+        return count;
     }
     }

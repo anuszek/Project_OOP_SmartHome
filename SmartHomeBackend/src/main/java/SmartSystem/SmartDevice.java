@@ -5,22 +5,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class SmartDevice {
     @JsonProperty
     private String name;
-    @JsonProperty
-    private final String deviceId;
-    private boolean online;
-    @JsonProperty
     private String description;
+    @JsonProperty
+    private boolean online;
+    private String deviceId;
+    @JsonProperty
+
+    private static int deviceCount = DbDevicesInterface.countDevices();
+
+    {
+        deviceCount++;
+        deviceId = "Device" + deviceCount;
+    }
 
     public SmartDevice(){
         this.deviceId = "";
     }
 
-    public SmartDevice(String name, String deviceId, String description, boolean online) {
+    public SmartDevice(String name, String description) {
+        this.name = name;
+        this.deviceId = deviceId;
+        this.description = description;
+        this.online = false;
+    }
+
+    public SmartDevice(String name, String description, boolean online, String deviceId) {
         this.name = name;
         this.deviceId = deviceId;
         this.description = description;
         this.online = online;
     }
+
     public String getName() {
         return name;
     }

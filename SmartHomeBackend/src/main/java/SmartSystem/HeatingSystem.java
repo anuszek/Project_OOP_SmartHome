@@ -6,8 +6,12 @@ public class HeatingSystem extends SmartDevice {
 
     public HeatingSystem(){}
 
-    public HeatingSystem(String name, String deviceId, String description, boolean online, int temperature) {
-        super(name, deviceId, description,online);
+    public HeatingSystem(String name, String description) {
+        super(name, description);
+        this.temperature = 22;
+    }
+    public HeatingSystem(String name, String description, boolean online, String deviceId, int temperature) {
+        super(name, description, online, deviceId);
         this.temperature = temperature;
     }
     public int getTemperature() {

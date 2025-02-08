@@ -94,4 +94,29 @@ public class DbUserLogin {
         }
         return usersList;
     }
+    public static Integer deleteUser(String username) {
+        String sql = "DELETE FROM Users WHERE username = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.executeUpdate();
+            return 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    public static String grantAdmin(String username) {
+        String sql = "UPDATE Users SET isAdmin = ? WHERE username = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setBoolean(1, true);
+            pstmt.setString(2, username);
+            pstmt.executeUpdate();
+            return "User successfully elevated";
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error elevating user";
+        }
+    }
 }
