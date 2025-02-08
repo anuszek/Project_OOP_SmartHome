@@ -86,14 +86,12 @@
             console.log("Error fetching data: ", error);
           });
       },
-      async handleToggleDevice(deviceId) {
+      async handleToggleDevice(device) {
         try {
-          const response = await axios.post('http://localhost:8080/api/toggle-device', {
-            deviceId: deviceId,
-          });
+          const response = await axios.post('http://localhost:8080/api/toggle-device', device);
         
           if (response.data) {
-            const device = this.devices.find((d) => d.deviceId === deviceId);
+            const dev = this.devices.find((d) => d.deviceId === device.deviceId);
             if (device) {
               device.online = !device.online;
             }
@@ -105,8 +103,8 @@
       async handleUpdateDevice(device){
         console.log(device);
         
-        let deviceId = device.deviceId;
-        let properties = {};     
+        // let deviceId = device.deviceId;
+        // let properties = {};     
         try {
           const response = await axios.post('http://localhost:8080/api/update-device', device);
           
@@ -118,11 +116,9 @@
           console.log("Error updating device: ", error);
         }
       },
-      async handleDeleteDevice(deviceId) {
+      async handleDeleteDevice(device) {
         try {
-          const response = await axios.post('http://localhost:8080/api/delete-device', {
-            deviceId: deviceId,
-          });
+          const response = await axios.post('http://localhost:8080/api/delete-device', device);
         
           if (response.data.success) {
             this.fetchDevices();
@@ -139,34 +135,35 @@
         this.selectedDevice = device;
         this.scrollPosition = window.scrollY;
         window.scrollTo(0, 0);
-        switch (device.name) {
-          case "Blinds":
-            this.selectedDeviceComponent = 'Blinds';
-            break;
-          case "Fridge":
-            this.selectedDeviceComponent = 'Fridge';
-            break;
-          case "Heating System":
-            this.selectedDeviceComponent = 'Heating';
-            break;
-          case "Living Room Lights":
-            this.selectedDeviceComponent = 'Lights';
-            break;
-          case "Front Door":
-            this.selectedDeviceComponent = 'Locks';
-            break;
-          case "Oven":
-            this.selectedDeviceComponent = 'Oven';
-            break;
-          case "Rumba":
-            this.selectedDeviceComponent = 'Rumba';
-            break;
-          case "Living Room Speaker":
-            this.selectedDeviceComponent = 'SoundSystem';
-            break;
-          default:
-            break;
-        }
+        // switch (device.name) {
+        //   case "Blinds":
+        //     this.selectedDeviceComponent = 'Blinds';
+        //     break;
+        //   case "Fridge":
+        //     this.selectedDeviceComponent = 'Fridge';
+        //     break;
+        //   case "Heating System":
+        //     this.selectedDeviceComponent = 'Heating';
+        //     break;
+        //   case "Living Room Lights":
+        //     this.selectedDeviceComponent = 'Lights';
+        //     break;
+        //   case "Front Door":
+        //     this.selectedDeviceComponent = 'Locks';
+        //     break;
+        //   case "Oven":
+        //     this.selectedDeviceComponent = 'Oven';
+        //     break;
+        //   case "Rumba":
+        //     this.selectedDeviceComponent = 'Rumba';
+        //     break;
+        //   case "Sound System":
+        //     this.selectedDeviceComponent = 'SoundSystem';
+        //     break;
+        //   default:
+        //     break;
+        // }
+        this.selectedDeviceComponent = device.deviceType;
       },
       clearSelectedDevice() {
         this.selectedDevice = null;

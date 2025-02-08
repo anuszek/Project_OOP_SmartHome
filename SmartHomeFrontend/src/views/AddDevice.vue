@@ -5,10 +5,12 @@
     <form @submit.prevent="handleAddDevice">
       <div class="form-group">
         <label for="device">Device Type: </label>
-        <select id="device" v-model="device" required>
+        <select id="device" v-model="deviceType" required>
           <option disabled value="">Please select a device</option>
-          <option v-for="device in devices" :key="device" :value="device">{{ device }}</option>
+          <option v-for="deviceType in devices" :key="deviceType" :value="deviceType">{{ deviceType }}</option>
         </select>
+        <input class="input" type="text" v-model="name" placeholder="Name" required>
+        <input class="input" type="text" v-model="description" placeholder="Description">
       </div>
       <button type="submit">Confirm</button>
     </form>
@@ -21,18 +23,24 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      device: '',
-      devices: ['Blinds', 'Fridge', 'Heating', 'Lights', 'Locks', 'Oven', 'Rumba', 'Sound System'],
+      deviceType: '',
+      name: '',
+      description: '',
+      devices: ['Blinds', 'Fridge', 'Heating', 'Lights', 'Locks', 'Oven', 'Rumba', 'SoundSystem'],
     };
   },
   methods: {
     async handleAddDevice() {
+      console.log(this.name, this.deviceType, this.description);
+      
       try {
         const response = await axios.post('http://localhost:8080/api/add-device', {
-          device: this.device,
+          name: this.name,
+          deviceType: this.deviceType,
+          description: this.description,
         });
 
-        if (response.data.success) {
+        if (response.data) {
           alert('Device added successfully');
         } else {
           alert('Failed to add device: ' + response.data.error);
@@ -70,7 +78,7 @@ form {
 }
 
 .form-group {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   margin-bottom: 15px;
   width: 50%;
@@ -80,6 +88,11 @@ form {
   flex: 1.2;
   margin-bottom: 20px;
   font-weight: bold;
+}
+
+.input {
+ height: 3vh;
+ margin-bottom: 15px;
 }
 
 .form-group select {

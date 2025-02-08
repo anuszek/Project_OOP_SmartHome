@@ -36,10 +36,10 @@ export default {
   },
   methods: {
     toggleDevice() {
-      this.$emit('toggle-device', this.device.deviceId);    
+      this.$emit('toggle-device', this.device);    
     },
     deleteDevice() {
-      this.$emit('delete-device', this.device.deviceId);
+      this.$emit('delete-device', this.device);
     },
     handleDevice(){
       this.$emit('display-device', this.device);
