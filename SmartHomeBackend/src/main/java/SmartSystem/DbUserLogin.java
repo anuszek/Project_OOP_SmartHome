@@ -2,6 +2,7 @@ package SmartSystem;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DbUserLogin {
     private static final String DB_URL = "jdbc:sqlite:SmartHomeBackend/src/main/resources/DB/Users";
@@ -63,7 +64,7 @@ public class DbUserLogin {
         return "Error registering user";
     }
     public static Boolean checkIfUserExists(String username){
-        String sql = "COUNT(*) FROM Users WHERE username = ?";
+        String sql = "SELECT COUNT(*) FROM Users WHERE username = ?";
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -76,5 +77,21 @@ public class DbUserLogin {
             e.printStackTrace();
         }
         return true;
+    }
+    public static HashMap<String, Boolean> getAllUsersList() {
+        HashMap<String, Boolean> usersList = new HashMap<>();
+        String sql = "SELECT username, isAdmin FROM Users";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                String username = rs.getString("username");
+                boolean isAdmin = rs.getBoolean("isAdmin");
+                usersList.put(username, isAdmin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usersList;
     }
 }
