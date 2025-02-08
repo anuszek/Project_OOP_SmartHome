@@ -12,7 +12,10 @@
         <input class="input" type="text" v-model="name" placeholder="Name" required>
         <input class="input" type="text" v-model="description" placeholder="Description">
       </div>
+      <div class="form-buttons">
       <button type="submit">Confirm</button>
+      <button @click="navigateToDevices">Cancel</button>
+    </div>
     </form>
   </div>
 </template>
@@ -49,6 +52,9 @@ export default {
       } catch (error) {
         console.error('Error:', error);
       }
+    },
+    navigateToDevices() {
+      this.$router.push('/devices');
     },
   },
 };
@@ -88,6 +94,11 @@ form {
   flex: 1.2;
   margin-bottom: 20px;
   font-weight: bold;
+}
+
+.form-buttons{
+  display: flex;
+  gap: 10px;
 }
 
 .input {
