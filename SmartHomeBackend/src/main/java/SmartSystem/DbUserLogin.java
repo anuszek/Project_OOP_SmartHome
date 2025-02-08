@@ -98,8 +98,10 @@ public class DbUserLogin {
         String sql = "DELETE FROM Users WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            conn.setAutoCommit(false);
             pstmt.setString(1, username);
             pstmt.executeUpdate();
+            conn.commit();
             return 1;
         } catch (SQLException e) {
             e.printStackTrace();
