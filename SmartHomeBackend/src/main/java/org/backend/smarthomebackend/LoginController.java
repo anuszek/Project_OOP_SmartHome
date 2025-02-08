@@ -67,7 +67,11 @@ public class LoginController {
         logger.info("Register result for username {}: {}", username, result);
 
         Map<String, Object> response = new HashMap<>();
-        response.put("authenticated", true);
+        if(result.equals("User already exists")) {
+            response.put("authenticated", false);
+        } else {
+            response.put("authenticated", true);
+        }
         response.put("isAdmin", false);
         response.put("userData", dbUserLogin.returnUserData(username));
 

@@ -2,12 +2,14 @@ package org.backend.smarthomebackend;
 
 
 import SmartSystem.DbDevicesInterface;
+import SmartSystem.DbUserLogin;
 import SmartSystem.SmartDevice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -22,9 +24,9 @@ public class SmartHomeController {
 
     @GetMapping("/users")
     public Map<String, Object> getUsers() {
-        // fetch users list from database
-        // return users list
-        return Map.of("users", "users");
+        HashMap<String, Boolean> users = new HashMap<>();
+        users = DbUserLogin.getAllUsersList();
+        return Map.of("users", users);
     }
 
     @PostMapping("/delete-user")
