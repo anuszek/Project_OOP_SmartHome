@@ -2,11 +2,15 @@ package SmartSystem;
 
 public class Oven extends SmartDevice {
     private String deviceType = "Oven";
-    private int temperature;
+    private int temperature = 22;
 
     public Oven(){}
-    public Oven(String name, String deviceId, String description,boolean online, int temperature) {
-        super(name, deviceId, description,online);
+    public Oven(String name, String description) {
+        super(name, description);
+        this.temperature = 22;
+    }
+    public Oven (String name, String description, boolean online, String deviceId,int temperature) {
+        super(name, description, online, deviceId);
         this.temperature = temperature;
     }
     public int getTemperature() {

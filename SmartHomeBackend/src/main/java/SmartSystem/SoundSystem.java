@@ -1,16 +1,18 @@
 package SmartSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SoundSystem extends SmartDevice{
-    private HashMap<String,Integer> playlist = new HashMap<>();
+    private List<String> playlist = new ArrayList<>();
     private String deviceType = "SoundSystem";
-    private int volume;
+    private int volume = 50;
 
     public SoundSystem(){}
-    public SoundSystem(String deviceName, String deviceId, String description,boolean online, int volume) {
-        super(deviceName, deviceId, description,online);
-        this.volume = volume;
+    public SoundSystem(String deviceName, String description) {
+        super(deviceName, description);
+        this.volume = 50;
     }
     public int getVolume() {
         return volume;
@@ -18,8 +20,8 @@ public class SoundSystem extends SmartDevice{
     public void setVolume(int volume) {
         this.volume = volume;
     }
-    public void addSong(String song, int length) {
-        playlist.put(song,length);
+    public void addSong(String song) {
+        playlist.add(song);
     }
     public void removeSong(String song) {
         playlist.remove(song);

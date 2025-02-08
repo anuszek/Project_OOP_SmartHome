@@ -2,13 +2,18 @@ package SmartSystem;
 
 public class Lights extends SmartDevice {
     private String deviceType = "Lights";
-    private int light_level;
-    private String lightColor;
+    private int light_level = 100;
+    private String lightColor = "";
 
     public Lights(){}
 
-    public Lights(String name, String deviceId, String description,boolean online, int light_level, String lightColor) {
-        super(name, deviceId,description,online);
+    public Lights(String name, String description) {
+        super(name ,description);
+        this.light_level = 0;
+        this.lightColor = "#FFFFFF";
+    }
+    public Lights(String name, String description, boolean online, String deviceId, int light_level, String lightColor) {
+        super(name, description, online, deviceId);
         this.light_level = light_level;
         this.lightColor = lightColor;
     }

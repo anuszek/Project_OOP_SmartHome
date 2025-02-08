@@ -6,12 +6,16 @@ public class Blinds extends SmartDevice {
     @JsonProperty
     private String deviceType = "Blinds";
     @JsonProperty
-    private int position;
+    private int position = 50;
 
     public Blinds(){}
 
-    public Blinds(String name, String deviceId, String description,boolean online, int position) {
-        super(name,deviceId,description,online);
+    public Blinds(String name, String description) {
+        super(name,description);
+        this.position = 50;
+    }
+    public Blinds(String name, String description, boolean online, String deviceId, int position) {
+        super(name, description, online, deviceId);
         this.position = position;
     }
     public int getPosition() {
