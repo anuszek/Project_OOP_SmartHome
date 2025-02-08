@@ -49,6 +49,9 @@ export default {
           this.toggleRegister();
           this.logIn(response.data);
         }
+        else {
+          alert('User already exists.');
+        }
       } catch (error) {
         console.log("Error creating user: ", error);
         alert('Creating user failed. Please try again later.');

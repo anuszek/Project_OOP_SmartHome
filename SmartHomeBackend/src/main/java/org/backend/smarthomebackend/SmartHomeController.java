@@ -57,7 +57,7 @@ public class SmartHomeController {
 
     @PostMapping("/toggle-device")
     public ResponseEntity<String> toggleDevice(@RequestBody Map<String, String> body) {
-        // get device id from request body
+        // get device from request body
         // change device state (online/offline)
         System.out.println(body);
         Logger logger = Logger.getLogger(SmartHomeController.class.getName());
