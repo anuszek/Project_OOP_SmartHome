@@ -24,8 +24,8 @@ public class SoundSystem extends SmartDevice{
     public void removeSong(String song) {
         playlist.remove(song);
     }
-    public HashMap<String,Integer> getPlaylist() {
-        return playlist;
+    public String getPlaylist() {
+        return playlist.toString();
     }
 
     @Override

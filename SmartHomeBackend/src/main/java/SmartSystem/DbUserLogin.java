@@ -47,7 +47,9 @@ public class DbUserLogin {
     public String register(String username, String password) {
 
         String sql = "INSERT INTO Users(username, password,isAdmin) VALUES(?, ?, ?)";
-
+        if (checkIfUserExists(username)) {
+            return "User already exists";
+        }
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
@@ -59,5 +61,20 @@ public class DbUserLogin {
             e.printStackTrace();
         }
         return "Error registering user";
+    }
+    public static Boolean checkIfUserExists(String username){
+        String sql = "COUNT(*) FROM Users WHERE username = ?";
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }
