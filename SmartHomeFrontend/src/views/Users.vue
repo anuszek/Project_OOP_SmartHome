@@ -78,12 +78,17 @@ export default {
         }
     },
     async grantAdmin(userName) {
-        await axios.post('http://localhost:8080/api/user-admin', {
+      try {
+          const response = await axios.post('http://localhost:8080/api/grant-admin', {
             userName,
-        })
-          .catch((error) => {
-            console.log("Error granting admin: ", error);
           });
+        
+          if (response) {
+            console.log(response);
+          }
+        } catch (error) {
+          console.log("Error deleting user: ", error);
+        }
     },
   },
 };

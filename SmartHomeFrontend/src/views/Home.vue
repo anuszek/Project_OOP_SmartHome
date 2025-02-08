@@ -61,9 +61,9 @@ export default {
 
   data() {
     return {
-      lightsStatus: 'Off',
-      thermostatStatus: 22,
-      securityStatus: 'Armed',
+      lightsStatus: "",
+      thermostatStatus: "",
+      securityStatus: "",
       recentActivity: [
         { id: 1, description: 'Lights turned on in the living room' },
         { id: 2, description: 'Thermostat set to 22°C' },
@@ -77,12 +77,37 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.fetchWeather();
+    this.fetchDevices();
+  },
   methods: {
+    async fetchDevices() {
+        this.devices = [];
+        await axios.get('http://localhost:8080/api/devices')
+          .then((response) => {
+            let devicesString = response.data.devices; 
+            let devices = [];
+            for(let i = 0; i < devicesString.length; i++) {
+              let device = JSON.parse(devicesString[i]);
+              devices.push(device);
+            }      
+            this.devices = devices;            
+          })
+          .catch((error) => {
+            console.log("Error fetching data: ", error);
+          });
+
+          this.lightsStatus = `color: ${this.devices.find(device => device.deviceType === 'Lights').lightColor},
+                              brightness: ${this.devices.find(device => device.deviceType === 'Lights').lightLevel}`;
+          this.thermostatStatus = this.devices.find(device => device.deviceType === 'HeatingSystem').temperature;
+          // this.securityStatus = this.devices.find(device => device.deviceType === '').status;
+      },
     toggleLights() {
-      this.lightsStatus = this.lightsStatus === 'On' ? 'Off' : 'On';
+      
     },
     adjustThermostat() {
-      this.thermostatStatus = this.thermostatStatus === 22 ? 24 : 22;
+
     },
     toggleSecurity() {
       this.securityStatus = this.securityStatus === 'Armed' ? 'Disarmed' : 'Armed';
@@ -141,9 +166,7 @@ export default {
       }
     },
   },
-  mounted() {
-    this.fetchWeather();
-  },
+  
 };
 </script>
 

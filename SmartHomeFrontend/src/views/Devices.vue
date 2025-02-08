@@ -30,7 +30,7 @@
   import axios from 'axios';
   import DeviceComponent from '../components/DeviceComponent.vue';
   import Fridge from '../components/devices/Fridge.vue';
-  import Heating from '../components/devices/Heating.vue';
+  import HeatingSystem from '../components/devices/HeatingSystem.vue';
   import Lights from '../components/devices/Lights.vue';
   import Blinds from '../components/devices/Blinds.vue';
   import Locks from '../components/devices/Locks.vue';
@@ -59,18 +59,19 @@
       DeviceComponent,
       Blinds,
       Fridge,
-      Heating,
+      HeatingSystem,
       Lights,
       Locks,
       Oven,
       Rumba,
       SoundSystem,
     },
-    async mounted() {
+    async mounted() {    
       await this.fetchDevices();
     },
     methods: {
       async fetchDevices() {
+        this.devices = [];
         await axios.get('http://localhost:8080/api/devices')
           .then((response) => {
             let devicesString = response.data.devices; 
@@ -100,17 +101,14 @@
           console.log("Error toggling device: ", error);
         }
       },
-      async handleUpdateDevice(device){
+      async handleUpdateDevice(device){       
         console.log(device);
-        
-        // let deviceId = device.deviceId;
-        // let properties = {};     
+
         try {
           const response = await axios.post('http://localhost:8080/api/update-device', device);
           
           if (response.data) {
            console.log("Device updated successfully");
-           
           }          
         } catch (error) {
           console.log("Error updating device: ", error);
@@ -131,7 +129,7 @@
         this.$router.push(path);
       },
       displayDevice(device){
-        // console.log(device);
+        console.log(device.deviceType);
         this.selectedDevice = device;
         this.scrollPosition = window.scrollY;
         window.scrollTo(0, 0);
@@ -182,7 +180,7 @@
     border: 5px solid #ccc;
     border-radius: 10px;
     width: 60vw;
-    height: 80vh;
+    min-height: 80vh;
     margin: auto;
     box-shadow: 2px 2px 7px #646cff;
   }
