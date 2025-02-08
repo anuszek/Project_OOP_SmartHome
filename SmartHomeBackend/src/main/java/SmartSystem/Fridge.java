@@ -25,8 +25,8 @@ public class Fridge extends SmartDevice {
         this.inventory = inventory;
         this.Skyrim = Skyrim;
     }
-    public List<String> getInventory() {
-        return inventory;
+    public String getInventory() {
+        return inventory.toString();
     }
     public void setInventory(List<String> inventory) {
         this.inventory = inventory;
