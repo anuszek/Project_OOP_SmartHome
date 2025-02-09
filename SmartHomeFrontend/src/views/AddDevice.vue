@@ -29,7 +29,7 @@ export default {
       deviceType: '',
       name: '',
       description: '',
-      devices: ['Blinds', 'Fridge', 'Heating', 'Lights', 'Locks', 'Oven', 'Rumba', 'SoundSystem'],
+      devices: ['Blinds', 'Fridge', 'HeatingSystem', 'Lights', 'Locks', 'Oven', 'Rumba', 'SoundSystem'],
     };
   },
   methods: {
