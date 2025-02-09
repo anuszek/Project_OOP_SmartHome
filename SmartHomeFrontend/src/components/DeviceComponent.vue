@@ -42,6 +42,10 @@ export default {
       this.$emit('delete-device', this.device);
     },
     handleDevice(){
+      if(!this.device.online){
+       alert("Device is offline");
+       return;
+      }
       this.$emit('display-device', this.device);
     },  
   }
