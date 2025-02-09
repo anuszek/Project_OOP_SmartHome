@@ -38,12 +38,12 @@ public class DbDevicesInterface {
 
         return devicesJsonList;
     }
-    public static void deleteDevice(String deviceData) {
+    public static void deleteDevice(String deviceID) {
         String sql = "DELETE FROM Devices WHERE deviceType= ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, deviceData);
+            pstmt.setString(1, deviceID);
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -62,24 +62,24 @@ public class DbDevicesInterface {
             logger.severe("Error updating device: " + ex.getMessage());
         }
     }
-    public static ArrayList<String> getDevice(String deviceId) {
-        ArrayList<String> deviceData = new ArrayList<>();
-        String sql = "SELECT * FROM Devices WHERE deviceID = ?";
+    public static String getDevice(String deviceId) {
+
+        String sql = "SELECT * FROM Devices WHERE deviceType = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, deviceId);
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                deviceData.add(rs.getString("deviceData"));
+            if (rs.next()) {
+                return (rs.getString("deviceData"));
             }
         } catch (SQLException ex) {
             logger.severe("Error extracting device: " + ex.getMessage());
         }
-
-        return deviceData;
+        return null;
     }
+
     public static int countDevices() {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM Devices";

@@ -67,25 +67,41 @@ public class SmartHomeController {
 
     @PostMapping("/toggle-device")
     public ResponseEntity<String> toggleDevice(@RequestBody Map<String, String> body) {
+        System.out.println(body);
         String deviceId = body.get("deviceId");
+        String deviceData = DbDevicesInterface.getDevice(deviceId);
         try {
-            SmartDevice device = JsonUtil.deserialize(body.toString(), SmartDevice.class);
-            device.toggle();
-            DbDevicesInterface.updateDevice(deviceId, JsonUtil.serialize(device));
+            Map<String, String> deviceMap = JsonUtil.deserialize(deviceData, Map.class);
+            Boolean currentState = Boolean.valueOf(deviceMap.get("online"));
+            if (currentState) {
+                deviceMap.put("online", String.valueOf(false));
+            } else {
+                deviceMap.put("online", String.valueOf(true));
+            }
+            String newDeviceData = JsonUtil.serialize(deviceMap);
+            DbDevicesInterface.updateDevice(deviceId, newDeviceData);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+
+
         Logger logger = Logger.getLogger(SmartHomeController.class.getName());
         logger.info("Toggling device with id: " + body.get("deviceId"));
-        return ResponseEntity.ok("Device toggled");
+       return ResponseEntity.ok("Device toggled");
     }
 
     @PostMapping("/update-device")
     public ResponseEntity<String> updateDevice(@RequestBody Map<String, String> body) {
         String deviceId = body.get("deviceId");
-        DbDevicesInterface.updateDevice(deviceId, body.toString());
-        System.out.println(body);
-        return ResponseEntity.ok("Device updated");
+        try {
+            String devicedata = JsonUtil.serialize(body);
+            DbDevicesInterface.updateDevice(deviceId, devicedata);
+            System.out.println(body);
+            return ResponseEntity.ok("Device updated");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error occurred");
+        }
     }
 
     @PostMapping("/add-device")
@@ -141,11 +157,9 @@ public class SmartHomeController {
 
     @PostMapping("/delete-device")
     public ResponseEntity<String> deleteDevice(@RequestBody Map<String, String> body) {
-        String deviceData = null;
+        String deviceId = body.get("deviceId");
 
-            deviceData = body.toString();
-
-        DbDevicesInterface.deleteDevice(deviceData);
+        DbDevicesInterface.deleteDevice(deviceId);
         System.out.println(body);
         return ResponseEntity.ok("Device deleted");
     }
