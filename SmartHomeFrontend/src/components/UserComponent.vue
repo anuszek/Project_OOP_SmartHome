@@ -3,7 +3,7 @@
     <p>{{ user.name }}</p>
     <div class="user-controls">
       <button @click="removeUser">Remove</button>
-      <!-- <button @click="grantAdmin">Grant Admin</button> -->
+      <button @click="grantAdmin">Grant Admin</button>
     </div>
   </div>
 </template>

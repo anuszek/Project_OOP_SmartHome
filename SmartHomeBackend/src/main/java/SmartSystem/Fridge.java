@@ -20,7 +20,7 @@ public class Fridge extends SmartDevice {
         super(name, description);
     }
 
-    public Fridge(String name, String description,boolean online, String deviceId,int fridgeTemp, int freezerTemp, List<String> inventory) {
+    public Fridge(String name, String description,String online, String deviceId,int fridgeTemp, int freezerTemp, List<String> inventory) {
         super(name, description, online, deviceId);
         this.fridgeTemp = fridgeTemp;
         this.freezerTemp = freezerTemp;

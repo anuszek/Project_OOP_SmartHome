@@ -9,7 +9,7 @@ public class Oven extends SmartDevice {
         super(name, description);
         this.temperature = 22;
     }
-    public Oven (String name, String description, boolean online, String deviceId,int temperature) {
+    public Oven (String name, String description, String online, String deviceId,int temperature) {
         super(name, description, online, deviceId);
         this.temperature = temperature;
     }

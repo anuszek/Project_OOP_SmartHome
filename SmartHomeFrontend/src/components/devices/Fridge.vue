@@ -55,6 +55,9 @@ export default {
   mounted() {
     if (typeof this.device.inventory === 'string') {
       this.inventory = this.device.inventory.replace(/[{}']/g, "").split(',');
+      this.inventory.shift();
+      console.log(this.inventory);
+      
     }
   },
   methods: {

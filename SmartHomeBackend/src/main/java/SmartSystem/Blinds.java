@@ -14,7 +14,7 @@ public class Blinds extends SmartDevice {
         super(name,description);
         this.position = 50;
     }
-    public Blinds(String name, String description, boolean online, String deviceId, int position) {
+    public Blinds(String name, String description, String online, String deviceId, int position) {
         super(name, description, online, deviceId);
         this.position = position;
     }

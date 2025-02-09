@@ -10,7 +10,7 @@ public class Locks extends SmartDevice {
         super(name, description);
         this.locked = false;
     }
-    public Locks(String name, String description, boolean online, String deviceId, boolean locked) {
+    public Locks(String name, String description, String online, String deviceId, boolean locked) {
         super(name, description, online, deviceId);
         this.locked = locked;
     }

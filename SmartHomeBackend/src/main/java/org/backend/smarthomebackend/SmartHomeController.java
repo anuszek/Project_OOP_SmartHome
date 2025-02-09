@@ -1,10 +1,7 @@
 package org.backend.smarthomebackend;
 
 
-import SmartSystem.DbDevicesInterface;
-import SmartSystem.DbUserLogin;
-import SmartSystem.JsonUtil;
-import SmartSystem.SmartDevice;
+import SmartSystem.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +36,7 @@ public class SmartHomeController {
     @PostMapping("/delete-user")
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, String> body) {
         System.out.println(body);
-        String username = body.get("userName");
+        String username = body.get("username");
         int response = DbUserLogin.deleteUser(username);
         if (response == 1) {
             return ResponseEntity.ok("User deleted");
@@ -72,11 +69,11 @@ public class SmartHomeController {
         String deviceData = DbDevicesInterface.getDevice(deviceId);
         try {
             Map<String, String> deviceMap = JsonUtil.deserialize(deviceData, Map.class);
-            Boolean currentState = Boolean.valueOf(deviceMap.get("online"));
-            if (currentState) {
-                deviceMap.put("online", String.valueOf(false));
+            String currentState = String.valueOf(deviceMap.get("online"));
+            if (currentState.equals("true")) {
+                deviceMap.put("online", "false");
             } else {
-                deviceMap.put("online", String.valueOf(true));
+                deviceMap.put("online", "true");
             }
             String newDeviceData = JsonUtil.serialize(deviceMap);
             DbDevicesInterface.updateDevice(deviceId, newDeviceData);
@@ -162,6 +159,37 @@ public class SmartHomeController {
         DbDevicesInterface.deleteDevice(deviceId);
         System.out.println(body);
         return ResponseEntity.ok("Device deleted");
+    }
+
+    @GetMapping("/timetable")
+    public Map<String, Object> getTimetable() {
+        ArrayList<String> timetable = new ArrayList<>();
+        timetable = DbTimeTables.getActiveTimeTables();
+        return Map.of("timetable", timetable);
+    }
+
+    @PostMapping("/add-timetable")
+    public ResponseEntity<String> addTimetable(@RequestBody Map<String, String> body) {
+        System.out.println(body);
+
+        String time = body.get("time");
+        String event = body.get("event");
+        String device = body.get("device");
+        DbTimeTables.addTimeTable(time, event, device);
+
+        return ResponseEntity.ok("Timetable added");
+    }
+
+    @PostMapping("/delete-timetable")
+    public ResponseEntity<String> deleteTimetable(@RequestBody Map<String, String> body) {
+        System.out.println(body);
+
+        String time = body.get("time");
+        String event = body.get("event");
+        String device = body.get("device");
+        DbTimeTables.deleteTimeTable(time, event, device);
+
+        return ResponseEntity.ok("Timetable deleted");
     }
 }
 

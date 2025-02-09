@@ -98,25 +98,43 @@ export default {
             console.log("Error fetching data: ", error);
           });
 
-          this.lightsStatus = `color: ${this.devices.find(device => device.deviceType === 'Lights').lightColor},
+          if (!this.devices.find(device => device.deviceType === 'Lights')) {
+            this.lightsStatus = 'No lights found';
+          }
+          else {
+            this.lightsStatus = `color: ${this.devices.find(device => device.deviceType === 'Lights').lightColor},
                               brightness: ${this.devices.find(device => device.deviceType === 'Lights').lightLevel}`;
-          this.thermostatStatus = this.devices.find(device => device.deviceType === 'HeatingSystem').temperature;
-          this.securityStatus = this.devices.find(device => device.deviceType === 'Locks').locked ? 'Locked' : `Lockedn't`;
+          }
+          if (!this.devices.find(device => device.deviceType === 'HeatingSystem')) {
+            this.thermostatStatus = 'No thermostat found';
+          }
+          else {
+            this.thermostatStatus = this.devices.find(device => device.deviceType === 'HeatingSystem').temperature;
+          }
+          if (!this.devices.find(device => device.deviceType === 'Locks')) {
+            this.securityStatus = 'No locks found';
+          }
+          else {
+            this.securityStatus = this.devices.find(device => device.deviceType === 'Locks').locked ? 'Locked' : `Lockedn't`;
+          }
       },
     toggleLights() {
       const device = this.devices.find(device => device.deviceType === 'Lights');
+      if (device == undefined) return;
       device.lightLevel = device.lightLevel === 0 ? 80 : 0;
       this.lightsStatus = `color: ${device.lightColor}, brightness: ${device.lightLevel}`;
       this.handleUpdateDevice(device);
     },
     adjustThermostat() {
       const device = this.devices.find(device => device.deviceType === 'HeatingSystem');
+      if (device == undefined) return;
       device.temperature = device.temperature < 20 ? device.temperature + 2 : device.temperature - 2;
       this.thermostatStatus = device.temperature;
       this.handleUpdateDevice(device);
     },
     toggleSecurity() {
       const device = this.devices.find(device => device.deviceType === 'Locks');
+      if (device == undefined) return;
       device.locked = !device.locked;
       this.securityStatus = device.locked ? 'Locked' : `Lockedn't`;
       this.handleUpdateDevice(device);

@@ -12,7 +12,7 @@ public class Lights extends SmartDevice {
         this.light_level = 0;
         this.lightColor = "#00000";
     }
-    public Lights(String name, String description, boolean online, String deviceId, int light_level, String lightColor) {
+    public Lights(String name, String description, String online, String deviceId, int light_level, String lightColor) {
         super(name, description, online, deviceId);
         this.light_level = light_level;
         this.lightColor = lightColor;

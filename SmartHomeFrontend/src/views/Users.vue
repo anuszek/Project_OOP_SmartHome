@@ -87,15 +87,14 @@ export default {
     },
     async grantAdmin(username) {
       try {
-          const response = await axios.post('http://localhost:8080/api/grant-admin', {
+          const response = await axios.post('http://localhost:8080/api/user-admin', {
             username,
           });
-        
           if (response) {
-            console.log(response);
+            // console.log(response);
           }
         } catch (error) {
-          console.log("Error deleting user: ", error);
+          console.log("Error granting privileges: ", error);
         }
     },
   },

@@ -24,7 +24,7 @@
   </div>
   </div>
   <div v-else>
-    <h2>Please log in to see the timetable.</h2>
+    <h2>Please log in to see the devices.</h2>
   </div>
 </template>
 
@@ -105,13 +105,12 @@
         }
       },
       async handleUpdateDevice(device){       
-        console.log(device);
-
         try {
           const response = await axios.post('http://localhost:8080/api/update-device', device);
           
           if (response.data) {
            console.log("Device updated successfully");
+           this.fetchDevices();
           }          
         } catch (error) {
           console.log("Error updating device: ", error);
@@ -132,7 +131,6 @@
         this.$router.push(path);
       },
       displayDevice(device){
-        console.log(device.deviceType);
         this.selectedDevice = device;
         this.scrollPosition = window.scrollY;
         window.scrollTo(0, 0);

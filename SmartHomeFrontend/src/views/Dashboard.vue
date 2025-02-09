@@ -67,41 +67,62 @@ export default {
     },
   data() {
     return {
-      timetable: [
-        { time: '07:00', event: 'Turn on heating', device: 'Heating System' },
-        { time: '08:00', event: 'Open blinds', device: 'Blinds' },
-        { time: '06:00', event: 'Turn on lights', device: 'Lights' },
-        { time: '10:00', event: 'Turn off heating', device: 'Heating System' },
-        { time: '11:00', event: 'Close blinds', device: 'Blinds' }
-      ],
+      timetable: [],
       newEvent: {
         time: '',
         event: '',
         device: ''
       },
-      avaliableDevices: ['Blinds', 'Heating', 'Lights'],
+      avaliableDevices: ['Blinds', 'HeatingSystem', 'Lights'],
     };
   },
   mounted(){
-
+    this.fetchTimetable();
   },
   methods: {
     async fetchTimetable() {
       try {
-        const response = await axios.get('http://localhost:3000/api/timetable');
-        this.timetable = response.data;
+        const response = await axios.get('http://localhost:8080/api/timetable');
+        response.data.timetable.forEach((entry) => {
+          entry = entry.split('ඞ ');
+          this.timetable.push({ time: entry[0], event: entry[1], device: entry[2] });
+        });            
       } catch (error) {
         console.error(error);
       }
     },
-    addEvent() {
-      this.timetable.push({ ...this.newEvent });
-      this.newEvent.time = '';
-      this.newEvent.event = '';
-      this.newEvent.device = '';
+    async addEvent() {
+      try {
+        const response = await axios.post('http://localhost:8080/api/add-timetable', {
+          time: this.newEvent.time,
+          event: this.newEvent.event,
+          device: this.newEvent.device
+        });
+        if (response.status) {
+          console.log('Event added successfully');
+          this.timetable.push({ ...this.newEvent });
+          this.newEvent.time = '';
+          this.newEvent.event = '';
+          this.newEvent.device = '';
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
-    deleteEvent(index) {
-      this.timetable.splice(index, 1);
+    async deleteEvent(index) {
+      try {
+        const response = await axios.post('http://localhost:8080/api/delete-timetable', {
+          time: this.timetable[index].time,
+          event: this.timetable[index].event,
+          device: this.timetable[index].device
+        });
+        if (response.status) {
+          console.log('Event deleted successfully');
+          this.timetable.splice(index, 1);
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 }

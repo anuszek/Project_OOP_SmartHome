@@ -9,7 +9,7 @@ public class Rumba extends SmartDevice{
         super(name, description);
     }
 
-    public Rumba(String name, String description, boolean online, String deviceId, boolean cleaning) {
+    public Rumba(String name, String description, String online, String deviceId, boolean cleaning) {
         super(name, description, online, deviceId);
         this.cleaning = cleaning;
     }

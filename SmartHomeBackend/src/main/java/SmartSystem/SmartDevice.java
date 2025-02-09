@@ -7,7 +7,7 @@ public abstract class SmartDevice {
     private String name;
     private String description;
     @JsonProperty
-    private boolean online;
+    private String online;
     private String deviceId;
     private static String deviceID2;
     @JsonProperty
@@ -27,10 +27,10 @@ public abstract class SmartDevice {
         this.name = name;
         this.deviceId = deviceID2;
         this.description = description;
-        this.online = false;
+        this.online = "false";
     }
 
-    public SmartDevice(String name, String description, boolean online, String deviceId) {
+    public SmartDevice(String name, String description, String online, String deviceId) {
         this.name = name;
         this.deviceId = deviceId;
         this.description = description;
@@ -46,13 +46,7 @@ public abstract class SmartDevice {
     public String getDeviceId() {
         return deviceId;
     }
-    public void toggle() {
-        online = !online;
-    }
 
-    public boolean isOnline() {
-        return online;
-    }
     public void setDescription(String description) {
         this.description = description;
     }

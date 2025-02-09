@@ -13,7 +13,7 @@
         <input class="input" type="text" v-model="description" placeholder="Description">
       </div>
       <div class="form-buttons">
-        <button @click="navigateToDevices">Cancel</button>
+        <button @click="navigateToDevices">Back</button>
         <button type="submit">Confirm</button>
       </div>
     </form>

@@ -14,10 +14,11 @@ public class DbTimeTables {
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(3, time);
-            pstmt.setString(2, deviceID);
+            pstmt.setString(3, deviceID);
+            pstmt.setString(2, event);
             pstmt.setString(1, time);
             pstmt.executeUpdate();
+            logger.info("TimeTable added ඞ");
         } catch (SQLException ex) {
             logger.severe("Error inserting time table: " + ex.getMessage());
         }
@@ -32,6 +33,7 @@ public class DbTimeTables {
             pstmt.setString(2, event);
             pstmt.setString(3, deviceID);
             pstmt.executeUpdate();
+            logger.info("successfully deleted ඞ");
 
         } catch (SQLException ex) {
             logger.severe("Error deleting time table: " + ex.getMessage());
