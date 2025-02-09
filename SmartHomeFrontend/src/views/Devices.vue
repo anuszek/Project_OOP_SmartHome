@@ -23,6 +23,9 @@
       </div>
   </div>
   </div>
+  <div v-else>
+    <h2>Please log in to see the timetable.</h2>
+  </div>
 </template>
 
 <script>

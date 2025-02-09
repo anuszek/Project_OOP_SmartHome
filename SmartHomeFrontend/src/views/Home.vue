@@ -6,14 +6,14 @@
         <h2>Current Status</h2>
         <p>Lights: {{ lightsStatus }}</p>
         <p>Thermostat: {{ thermostatStatus }}°C</p>
-        <p>Security System: {{ securityStatus }}</p>
+        <p>Locks: {{ securityStatus }}</p>
       </div>
       <div class="controls">
-        <h2>Controls</h2>
+        <h2>Quick Controls</h2>
         <div class="controls-buttons">
           <button @click="toggleLights">Toggle Lights</button>
           <button @click="adjustThermostat">Adjust Thermostat</button>
-          <button @click="toggleSecurity">Toggle Security System</button>
+          <button @click="toggleSecurity">Toggle Locks</button>
         </div>
       </div>
       <div class="activity">
@@ -101,17 +101,37 @@ export default {
           this.lightsStatus = `color: ${this.devices.find(device => device.deviceType === 'Lights').lightColor},
                               brightness: ${this.devices.find(device => device.deviceType === 'Lights').lightLevel}`;
           this.thermostatStatus = this.devices.find(device => device.deviceType === 'HeatingSystem').temperature;
-          // this.securityStatus = this.devices.find(device => device.deviceType === '').status;
+          this.securityStatus = this.devices.find(device => device.deviceType === 'Locks').locked ? 'Locked' : `Lockedn't`;
       },
     toggleLights() {
-      
+      const device = this.devices.find(device => device.deviceType === 'Lights');
+      device.lightLevel = device.lightLevel === 0 ? 80 : 0;
+      this.lightsStatus = `color: ${device.lightColor}, brightness: ${device.lightLevel}`;
+      this.handleUpdateDevice(device);
     },
     adjustThermostat() {
-
+      const device = this.devices.find(device => device.deviceType === 'HeatingSystem');
+      device.temperature = device.temperature < 20 ? device.temperature + 2 : device.temperature - 2;
+      this.thermostatStatus = device.temperature;
+      this.handleUpdateDevice(device);
     },
     toggleSecurity() {
-      this.securityStatus = this.securityStatus === 'Armed' ? 'Disarmed' : 'Armed';
+      const device = this.devices.find(device => device.deviceType === 'Locks');
+      device.locked = !device.locked;
+      this.securityStatus = device.locked ? 'Locked' : `Lockedn't`;
+      this.handleUpdateDevice(device);
     },
+    async handleUpdateDevice(device){       
+        try {
+          const response = await axios.post('http://localhost:8080/api/update-device', device);
+          
+          if (response.data) {
+          //  console.log("Device updated successfully");
+          }          
+        } catch (error) {
+          console.log("Error updating device: ", error);
+        }
+      },
     fetchWeather(){
       const apiKey = '451e252e659bf3f308a40bfb80b72ce4';
       const city = 'Krakow';

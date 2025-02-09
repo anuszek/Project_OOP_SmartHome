@@ -47,7 +47,8 @@ export default {
           alert('Login failed: ' + response.data.error);
         }
       } catch (error) {
-        console.error('Login error:', error);
+        alert('Login failed, wrong username or password');       
+        // console.error('Login error:', error);
       }
     },
   },
