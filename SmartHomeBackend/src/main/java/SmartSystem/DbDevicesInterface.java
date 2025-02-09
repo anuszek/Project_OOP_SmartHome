@@ -9,12 +9,12 @@ public class DbDevicesInterface {
     private static final Logger logger = Logger.getLogger(DbDevicesInterface.class.getName());
     private static final String DB_URL = "jdbc:sqlite:SmartHomeBackend/src/main/resources/DB/Devices";
 
-    public static void addDevice(String deviceID, String deviceData) {
-        String sql = "INSERT INTO Devices(deviceData) VALUES(?,?)";
+    public static void addDevice(String deviceType, String deviceData) {
+        String sql = "INSERT INTO Devices(deviceType, deviceData) VALUES(?,?)";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, deviceID);
+            pstmt.setString(1, deviceType);
             pstmt.setString(2, deviceData);
             pstmt.executeUpdate();
         } catch (SQLException ex) {
@@ -38,19 +38,20 @@ public class DbDevicesInterface {
 
         return devicesJsonList;
     }
-    public static void deleteDevice(String deviceId) {
-        String sql = "DELETE FROM Devices WHERE deviceID = ?";
+    public static void deleteDevice(String deviceID) {
+        String sql = "DELETE FROM Devices WHERE deviceType= ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, deviceId);
+            pstmt.setString(1, deviceID);
             pstmt.executeUpdate();
+
         } catch (SQLException ex) {
             logger.severe("Error deleting device: " + ex.getMessage());
         }
     }
     public static void updateDevice(String deviceId, String newDeviceData) {
-        String sql = "UPDATE Devices SET deviceData = ? WHERE deviceData = ?";
+        String sql = "UPDATE Devices SET deviceData = ? WHERE deviceType = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -61,24 +62,24 @@ public class DbDevicesInterface {
             logger.severe("Error updating device: " + ex.getMessage());
         }
     }
-    public static ArrayList<String> extractDevice(String deviceId) {
-        ArrayList<String> deviceData = new ArrayList<>();
-        String sql = "SELECT * FROM Devices WHERE deviceID = ?";
+    public static String getDevice(String deviceId) {
+
+        String sql = "SELECT * FROM Devices WHERE deviceType = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, deviceId);
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                deviceData.add(rs.getString("deviceData"));
+            if (rs.next()) {
+                return (rs.getString("deviceData"));
             }
         } catch (SQLException ex) {
             logger.severe("Error extracting device: " + ex.getMessage());
         }
-
-        return deviceData;
+        return null;
     }
+
     public static int countDevices() {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM Devices";
