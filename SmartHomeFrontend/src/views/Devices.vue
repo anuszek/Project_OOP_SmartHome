@@ -120,7 +120,9 @@
         try {
           const response = await axios.post('http://localhost:8080/api/delete-device', device);
         
-          if (response.data.success) {
+          if (response.status) {
+            // console.log(response);
+            
             this.fetchDevices();
           }
         } catch (error) {
